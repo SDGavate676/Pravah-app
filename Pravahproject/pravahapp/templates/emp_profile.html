@@ -1,0 +1,277 @@
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Candidate Dashboard</title>
+    <link href="{% static 'style.css' %}" rel="stylesheet">
+    <style>
+        h1{
+           
+            text-align: center;
+        }
+        h2{
+          text-align: center;
+           
+        }
+nav {
+    background-color:rgba(251, 151, 19, 0.996) ;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+nav article {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* or center if preferred */
+    gap: 4px;
+}
+
+.logo-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo .symbol {
+    width: 48px;
+    height: 48px;
+}
+
+.logo .name {
+    font-size: 2.5rem;
+    font-weight: bolder;
+    color: #073479; /* or #0B8FAB based on your background */
+}
+
+.logo  .name .Span {
+    color:#0ec4fc
+}
+
+.logo .name:hover {
+    color:    #8A2BE2; /* or #F4A259 based on your background */
+}
+.logo .tagline {
+    font-size: 0.80rem;
+    color: rgb(20, 44, 92); /* soft white if navbar bg is dark */
+    margin-bottom: 5px;
+    margin-left: 30px;
+    font-weight:bolder;
+    align-items: center;
+    
+
+}
+.logo-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px; /* spacing between banner and logo */
+    font-size: 1.2rem;
+}
+
+.logo-banner {
+    width: 120px; /* adjust based on design */
+    height: auto;
+    margin-bottom: 4px; 
+    border-color:rgba(235, 136, 7, 0.993) ;
+  
+
+}
+
+.logo-banner {
+  height: 180px;
+  width: 280px;
+}
+
+.menu-icon {
+  display: none;
+  font-size: 2rem;
+  color: white;
+  cursor: pointer;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+}
+
+/* Hide menu checkbox */
+#menu-toggle {
+  display: none;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .menu-icon {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    margin-top: 1rem;
+  }
+
+  #menu-toggle:checked ~ .nav-links {
+    display: flex;
+  }
+
+  .nav-links a {
+    padding: 0.5rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  nav article {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .logo-container {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.form-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .form-row label {
+        width: 150px; /* Adjust width for alignment */
+        font-weight: bold;
+    }
+
+    .form-row input,
+    .form-row select {
+        flex: 1;
+    }
+
+
+    </style>
+</head>
+<body>
+    <nav>
+        <article>
+            <!-- <div>
+                <img src="{% static 'img/finalorange1.png' %}" alt="Logo Banner" style="height: 180px; width: 280px; "> 
+               </div> -->
+
+               <div lass="logo-container">
+                <img src="{% static 'img/finalorange1.png' %}" alt="Logo Banner" class="logo-banner"> 
+               </div>
+
+               <input type="checkbox" id="menu-toggle" />
+                <label for="menu-toggle" class="menu-icon">&#9776;</label>
+             <div class="nav-links" >
+                <a href="/emplogin">Login</a>
+                <a href="/empregistration">Register</a>
+                <a href="/emp_profile">Employee Profile</a>
+   </div>
+       
+  
+     
+    
+ 
+     
+      </article>
+      </nav>
+    <h1>Hello {{username}}!</h1>
+    {% if request.session.username %}
+    <h2>Welcome, {{ request.session.username }}!</h2>
+    {% endif %}
+    <h3>Welcome to the Employee Dashboard!</h3>
+    <div class="container">
+        <h1>Employer Profile</h1>
+       
+        <!-- Display form -->
+        <form method="POST">
+            {% csrf_token %}
+           
+            <div class="form-row">
+              {{ form.name.label_tag }}
+              {{ form.name }}
+          </div>
+          
+          <div class="form-row">
+              {{ form.email.label_tag }}
+              {{ form.email }}
+          </div>
+          
+          <div class="form-row">
+              {{ form.phoneNo.label_tag }}
+              {{ form.phoneNo }}
+          </div>
+          
+          <div class="form-row">
+              {{ form.company_name.label_tag }}
+              {{ form.company_name }}
+          </div>
+
+          <div class="form-row">
+            {{ form.designation.label_tag }}
+            {{ form.designation }}
+        </div>
+        
+        <div class="form-row">
+            {{ form.location.label_tag }}
+            {{ form.location }}
+        </div>
+        
+        <div class="form-row">
+            {{ form.sector.label_tag }}
+            {{ form.sector }}
+        </div>
+        
+        <div class="form-row">
+            {{ form.companywebsite.label_tag }}
+            {{ form.companywebsite }}
+        </div>
+        
+     
+          
+       
+
+
+        
+            
+            <!-- Submit button -->
+
+            <button type="submit">Create Profile</button>
+        </form>
+    </div>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact Us</a>
+            </div>
+            <div class="footer-copy">
+                <p>&copy; 2025 PRAVAH. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+
+
+</body>
+</html>
+{% endblock  %}

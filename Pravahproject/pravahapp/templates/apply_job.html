@@ -1,0 +1,132 @@
+{% load static%}
+
+{% block content %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply for Job</title>
+    <link href="{% static 'style.css' %}" rel="stylesheet">
+    <style>
+              /* .container {
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #0a0a0a;
+            border-radius: 5px;
+            width: 400px;
+            align-items: center;
+            margin-right: 200px;
+            margin-left: 750px;
+
+          
+            
+
+        } */
+
+        .container {
+    margin: 20px auto; /* Center horizontally */
+    padding: 20px;
+    border: 1px solid #0a0a0a;
+    border-radius: 5px;
+    width: 90%; /* Default for small screens */
+    max-width: 400px; /* Maximum width on large screens */
+    box-sizing: border-box;
+}
+
+/* Desktop view ke liye (768px se zyada width) */
+@media (min-width: 768px) {
+    .container {
+        margin-left: auto;
+        margin-right: auto;
+        width: 400px; /* Fixed width on desktop */
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 100%;
+        border-radius: 0;
+        padding: 15px;
+        margin: 10px;
+    }
+}
+
+
+    </style>
+</head>
+<body>
+ 
+
+    <main>
+        <div class="container">
+        <h2>Apply for Job</h2><br>
+        <hr class="w-25 mx-auto bg-info">
+        <form method="POST" enctype="multipart/form-data" class="p-4 shadow rounded bg-light">
+            {% csrf_token %}
+            <!-- <label for="name">Full Name:</label>
+             <input type="text" class="name"  placeholder="Enter your Name...">
+
+             <label for="email">Email Address:</label>
+             <input type="text" class="email"  placeholder="Enter your email id...">
+
+             <label for="number">Phone No.:</label>
+             <input type="number" class="email"  placeholder="Enter your phone no...">
+
+             <label for="position">Job Position:</label>
+             <input type="text" class="position"  placeholder="Enter your applied job role...">
+
+
+             <label for="resume">Resume/CV:</label>
+             <input type="file" id="resume" name="resume" accept=".pdf, .doc, .docx"> -->
+             
+             <div class="mb-3">
+                {{ form.full_name.label_tag }}
+                {{ form.full_name }}
+            </div>
+    
+            <div class="mb-3">
+                {{ form.email.label_tag }}
+                {{ form.email }}
+            </div>
+    
+            <div class="mb-3">
+                {{ form.phone_number.label_tag }}
+                {{ form.phone_number }}
+            </div>
+    
+            <div class="mb-3">
+                {{ form.job_position.label_tag }}
+                {{ form.job_position }}
+            </div>
+    
+            <div class="mb-3">
+                {{ form.resume.label_tag }}
+                {{ form.resume }}
+            </div>
+    
+            <!-- <div class="text-center">
+                <button type="submit" class="btn btn-primary px-5">Submit</button>
+            </div> -->
+             
+            
+
+       
+            <button type="submit">Submit</button>
+        </form>
+        </div>
+        {% if success %}
+        <div class="alert alert-success" role="alert">
+            Your application has been submitted successfully!
+        
+        {% endif %}
+    </div>
+    </main>
+
+  
+</body>
+</html>
+
+{% endblock %}

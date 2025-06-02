@@ -1,0 +1,306 @@
+.root{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+body{
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+}
+.container{
+   
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+  
+    margin-top: 250px;
+   
+
+}
+
+h1{
+    font-size: 2.5rem;
+    color: #333;
+}
+
+h3{
+    text-align: center;
+}
+
+/* Navbar Styles */
+/* .navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #333;
+    color: #8f0c0c;
+}
+
+.navbar a{
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.navbar a:hover{
+    background-color: #555;
+}
+.navbar .logo{
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+ */
+
+          /* Reset some default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f9fb;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Navigation bar */
+nav {
+    background-color: rgb(224, 116, 15);
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+nav article {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* or center if preferred */
+    gap: 4px;
+}
+
+.logo-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo .symbol {
+    width: 48px;
+    height: 48px;
+}
+
+.logo .name {
+    font-size: 2.5rem;
+    font-weight: bolder;
+    color: #073479; /* or #0B8FAB based on your background */
+}
+
+.logo  .name .Span {
+    color:#0ec4fc
+}
+
+.logo .name:hover {
+    color:    #8A2BE2; /* or #F4A259 based on your background */
+}
+.logo .tagline {
+    font-size: 0.80rem;
+    color: rgb(20, 44, 92); /* soft white if navbar bg is dark */
+    margin-bottom: 5px;
+    margin-left: 30px;
+    font-weight:bolder;
+    align-items: center;
+    
+
+}
+.logo-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px; /* spacing between banner and logo */
+    font-size: 1.2rem;
+}
+
+.logo-banner {
+    width: 120px; /* adjust based on design */
+    height: auto;
+    margin-bottom: 4px; 
+    border-color:rgba(235, 136, 7, 0.993) ;
+  
+
+}
+
+
+
+
+/* .logo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+    gap: 4px;
+}
+
+.logo-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo .symbol {
+    width: 48px;
+    height: 48px;
+}
+
+.logo .name {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #0B8FAB; 
+}
+
+.logo .name:hover {
+    color:    #8A2BE2;
+}
+.logo .tagline {
+    font-size: 0.85rem;
+    color: #f0f0f0; 
+    font-style: italic;
+    margin-left: 4px;
+} */
+
+
+
+/* Nav links */
+nav a {
+    margin-left: 1rem;
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color:#8A2BE2 ;
+    
+}
+
+/* Container for login */
+.container {
+ 
+    max-width: 500px;
+    margin: 3rem auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-color: black;
+     border: 2px solid #3d769c;  
+}
+
+.container h1 {
+    text-align: center;
+    color: #dd610e;
+    margin-bottom: 1rem;
+}
+
+.container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.container form input, .container form select, .container form textarea {
+    padding: 0.6rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.container form button {
+    padding: 0.6rem;
+    background-color: #0B8FAB;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.container form button:hover {
+    background-color: #3CB371;
+}
+
+.container a {
+    display: block;
+    text-align: center;
+    margin-top: 1rem;
+    color: #0B3954;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.container a:hover {
+    color: #F4A259;
+}
+
+footer {
+    background-color: #18a5c9;
+    color: white;
+    padding: 1rem 2rem;
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-links {
+    margin-bottom: 1rem;
+}
+
+.footer-links a {
+    text-decoration: none;
+    color: white;
+    margin: 0 1rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #F4A259;
+}
+
+.footer-copy p {
+    font-size: 0.85rem;
+    color: #ccc;
+}
+

@@ -1,0 +1,241 @@
+{% extends 'login.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="{% static 'style.css' %}" rel="stylesheet">
+    <style>
+nav {
+    background-color:rgba(251, 151, 19, 0.996) ;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+nav article {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* or center if preferred */
+    gap: 4px;
+}
+
+.logo-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo .symbol {
+    width: 48px;
+    height: 48px;
+}
+
+.logo .name {
+    font-size: 2.5rem;
+    font-weight: bolder;
+    color: #073479; /* or #0B8FAB based on your background */
+}
+
+.logo  .name .Span {
+    color:#0ec4fc
+}
+
+.logo .name:hover {
+    color:    #8A2BE2; /* or #F4A259 based on your background */
+}
+.logo .tagline {
+    font-size: 0.80rem;
+    color: rgb(20, 44, 92); /* soft white if navbar bg is dark */
+    margin-bottom: 5px;
+    margin-left: 30px;
+    font-weight:bolder;
+    align-items: center;
+    
+
+}
+.logo-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px; /* spacing between banner and logo */
+    font-size: 1.2rem;
+}
+
+.logo-banner {
+    width: 120px; /* adjust based on design */
+    height: auto;
+    margin-bottom: 4px; 
+    border-color:rgba(235, 136, 7, 0.993) ;
+  
+
+}
+
+.logo-banner {
+  height: 180px;
+  width: 280px;
+}
+
+.menu-icon {
+  display: none;
+  font-size: 2rem;
+  color: white;
+  cursor: pointer;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+}
+
+/* Hide menu checkbox */
+#menu-toggle {
+  display: none;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .menu-icon {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    margin-top: 1rem;
+  }
+
+  #menu-toggle:checked ~ .nav-links {
+    display: flex;
+  }
+
+  .nav-links a {
+    padding: 0.5rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  nav article {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .logo-container {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+
+
+    </style>
+</head>
+<body>
+    <nav>
+        <article>
+             <!-- <div class="logo"> -->
+                <!-- SVG: Book opening into wave -->
+                <!-- <svg class="symbol" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10 10C20 20 20 44 10 54" stroke="#0B8FAB" stroke-width="4" stroke-linecap="round"/>
+                  <path d="M54 10C44 20 44 44 54 54" stroke="#F4A259" stroke-width="4" stroke-linecap="round"/>
+                  <path d="M10 54C20 44 44 44 54 54" stroke="#0B3954" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            
+                <div class="name">PRAVAH</div>
+                <div class="tagline">Bridging Talents to Opportunity</div>
+              </div>  -->
+
+              <!-- <div class="logo">
+                <div class="logo-top">
+                  <svg class="symbol" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 10C20 20 20 44 10 54" stroke="#0B8FAB" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M54 10C44 20 44 44 54 54" stroke="#F4A259" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M10 54C20 44 44 44 54 54" stroke="#0B3954" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                  <div class="name">PRAVAH</div>
+                </div>
+                <div class="tagline">Bridging Talents to Opportunity</div>
+              </div> -->
+              <!-- <div class="logo-wrapper"> -->
+                <!-- Image above the logo -->
+                <!-- <img src="{% static 'img/faintorange.png' %}" alt="Logo Banner" class="logo-banner">
+            <div class="logo">
+                <div class="logo-top"> -->
+                  <!-- <svg class="symbol" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 10C20 20 20 44 10 54" stroke="#0B8FAB" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M54 10C44 20 44 44 54 54" stroke="#F4A259" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M10 54C20 44 44 44 54 54" stroke="#0B3954" stroke-width="2" stroke-linecap="round"/>
+                  </svg> -->
+                    <!-- <img class="symbol" src="{% static 'img/logo.jpeg' %}" alt="Logo" style="width: 48px; height: 48px;"> -->
+                  <!-- <div class="name">pravah.<span  class="Span">org</span></div>
+                </div>
+                <div class="tagline">Connecting Talent to Opportunity</div>
+              </div>
+              </div> -->
+
+              <!-- <div>
+                <img src="{% static 'img/finalorange1.png' %}" alt="Logo Banner" style="height: 180px; width: 280px; "> 
+               </div>
+            
+              
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
+            <a href="/create_profile">Candidate Profile</a>
+  
+      -->
+      <div lass="logo-container">
+        <img src="{% static 'img/finalorange1.png' %}" alt="Logo Banner" class="logo-banner"> 
+       </div>
+
+       <input type="checkbox" id="menu-toggle" />
+        <label for="menu-toggle" class="menu-icon">&#9776;</label>
+     <div class="nav-links" >
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+        <a href="/create_profile">Candidate Profile</a>
+</div>
+ 
+     
+      </article>
+      </nav>
+   
+     
+     
+    <h1>Profile Success</h1>
+    <p>Your profile has been successfully created!</p>
+    <a href="{% url 'logout'  %}">Logout</a>
+
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact Us</a>
+            </div>
+            <div class="footer-copy">
+                <p>&copy; 2025 PRAVAH. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+</body>
+</html>
+
+{% endblock %}
