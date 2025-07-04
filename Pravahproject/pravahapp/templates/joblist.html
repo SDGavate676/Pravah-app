@@ -153,8 +153,14 @@
  ul,.list-group{
 
    display: inline-block;
+   margin-bottom: 10PX;
    
+
 }
+
+
+
+ 
 
       
             </style>
@@ -176,15 +182,19 @@
             <div class="col-md-6 text-center text-lg-end">
                 <div class="position-relative d-inline-flex align-items-center bg-primary text-white top-shape px-5">
                     <div class="me-3 pe-3 border-end py-2">
-                        <p class="m-0"><i class="fa fa-envelope-open me-2"></i>info@example.com</p>
+                        <p class="m-0"><i class="fa fa-user me-2"></i><span>Hello, {{ request.user.username }}</span></p>
                     </div>
                     <div class="py-2">
-                        <p class="m-0"><i class="fa fa-phone-alt me-2"></i>+012 345 6789</p>
-                    </div>
+                    <p class="m-0 text-white">
+                    <i class="fa fa-sign-out-alt me-2"></i>
+                    <a href="/user_logout/" class="text-white text-decoration-none">Logout</a>
+                    </p>
+                   </div>
                 </div>
             </div>
         </div>
     </div>
+    
     <!-- Topbar End -->
 
 
@@ -194,7 +204,7 @@
     <a href="/" class="navbar-brand p-0">
 
 
-        <img src="{% static 'img/finalwhite1.png' %}" alt="Logo Banner"  style="height: 200px; width: 280px;"> 
+        <img src="{% static 'img/finalwhite1.png' %}" alt="Logo Banner"  style="height: 200px; width: 200px;"> 
         <!-- <div class="logo-wrapper"> -->
             <!-- Image above the logo -->
             <!-- <img src="{% static 'img/white.png' %}" alt="Logo Banner" class="logo-banner">
@@ -214,23 +224,15 @@
         <!-- <h1 class="m-0 text-uppercase text-primary"><i class="far fa-smile text-primary me-2"></i>Pravah Org</h1>  -->
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-        <div class="navbar-nav ms-auto py-0 me-n3">
-            <a href="/" class="nav-item nav-link active">Home</a>
-            <a href="/about/" class="nav-item nav-link">About</a>
-            <a href="/service/" class="nav-item nav-link">Service</a>
-            <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Career</a>
-                <div class="dropdown-menu m-0">
-                 
-                    <a href="/features/" class="dropdown-item">Features</a>
-                    <a href="/jobpostings/" class="dropdown-item">Jobpostings</a>
-                </div>
-            </div>
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto py-0 me-n3">
+               
+                <a href="/candi_dashboard/" class="nav-item nav-link">Home</a>
+                <a href="/candidate_dashboard/" class="nav-item nav-link">My Profile</a>
+                <a href="/joblist/" class="nav-item nav-link">Job Portal</a>
             
-            <a href="/contact/" class="nav-item nav-link">Contact</a>
           
         </div>
     </div>
@@ -239,7 +241,7 @@
 
 
     <!-- Page Header Start -->
-    <div class="container-fluid bg-dark p-5">
+    <!-- <div class="container-fluid bg-dark p-5">
         <div class="row">
             <div class="col-12 text-center">
                 <h1 class="display-4 text-white">Job Portal</h1>
@@ -248,26 +250,31 @@
                 <a href="">Job Portal</a>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- Page Header End -->
-
+    
     <form method="get" action="{% url 'joblist' %}">
         <input 
             type="text" 
             name="q"
             value="{{ query }}"
             placeholder="Search for jobs..." 
-            class="form-control bg-light border-0 mx-auto rounded-pill"
-            style="width: 90%; max-width: 600px; height: 50px; margin-top: 20px;  border: 2px solid #007bff; position: relative;" >
+            class="form-control bg-light border-2 mx-auto rounded-pill"
+            style="width: 90%; max-width: 600px; height: 50px; margin-top: 20px;  border: 2px solid hsl(197, 85%, 49%); " >
     </form>
     
-    <div class="container my-5">
-        <h3>Available Jobs</h3>
+    <div class="container-fluid my-5  border-1" style="border: 1px solid rgba(0, 0, 0, 0.678);">
+       <br>
+        <h3  class="text-center">Available Jobs</h3>
+
+    <br>
         
-    <ul class="list-group" >
+    <ul   class="d-flex flex-wrap justify-content-center gap-3"  style="display: flex; flex-wrap: wrap; gap: 20px; padding-left: 0;  list-style: none; " >
+        
             {% for job in jobs %}
-            
-                <li class="list-group-item" >
+          
+                <li  style="flex: 0 0 300px; border: 1px solid rgb(148, 147, 147); border-radius: 8px; padding: 15px;">
+                    
                     
                     
                     
@@ -285,11 +292,15 @@
                     {% endif %}
                 </li>
                 
+                
             {% empty %}
                 <li class="list-group-item">No jobs found.</li>
             {% endfor %}
+            
         </ul>
+        <br>
         
+    </div>
     </div>
 
     <!-- <div class="container" >

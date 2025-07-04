@@ -9,16 +9,16 @@
     <title> Candidate Dashboard</title>
     <link href="{% static 'style.css' %}" rel="stylesheet">
     <style>
-        h1{
+h1{
            
-            text-align: center;
-        }
-        h2{
-          text-align: center;
+  text-align: center;
+}
+h2{
+  text-align: center;
            
-        }
+}
 nav {
-    background-color:rgba(251, 151, 19, 0.996) ;
+    background-color:white ;
     padding: 1rem 2rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -29,73 +29,16 @@ nav article {
     align-items: center;
     flex-wrap: wrap;
 }
-.logo {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* or center if preferred */
-    gap: 4px;
-}
-
-.logo-top {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.logo .symbol {
-    width: 48px;
-    height: 48px;
-}
-
-.logo .name {
-    font-size: 2.5rem;
-    font-weight: bolder;
-    color: #073479; /* or #0B8FAB based on your background */
-}
-
-.logo  .name .Span {
-    color:#0ec4fc
-}
-
-.logo .name:hover {
-    color:    #8A2BE2; /* or #F4A259 based on your background */
-}
-.logo .tagline {
-    font-size: 0.80rem;
-    color: rgb(20, 44, 92); /* soft white if navbar bg is dark */
-    margin-bottom: 5px;
-    margin-left: 30px;
-    font-weight:bolder;
-    align-items: center;
-    
-
-}
-.logo-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1px; /* spacing between banner and logo */
-    font-size: 1.2rem;
-}
 
 .logo-banner {
-    width: 120px; /* adjust based on design */
-    height: auto;
-    margin-bottom: 4px; 
-    border-color:rgba(235, 136, 7, 0.993) ;
-  
-
-}
-
-.logo-banner {
-  height: 180px;
-  width: 280px;
+  height: 200px;
+  width: 200px;
 }
 
 .menu-icon {
   display: none;
   font-size: 2rem;
-  color: white;
+  color:rgb(242, 139, 43);
   cursor: pointer;
 }
 
@@ -106,15 +49,41 @@ nav article {
 
 .nav-links a {
   text-decoration: none;
-  color: white;
-  font-weight: 500;
+  color:#15b8e1;
+  font-weight: bold;
+  font-size: larger;
 }
 
+.nav-links a:hover {
+  color: rgb(242, 139, 43);
+}
 /* Hide menu checkbox */
 #menu-toggle {
   display: none;
 }
+header{
+  
+   
+    background-color: #15b8e1;
+    color: white;
+    padding: 1rem 2rem;
+    margin-top: 2rem;
+    text-align: center;
+    height: 160px;
+    margin-top: 0;
+    margin-bottom: .5rem;
+  
+}
 
+.h1{
+    color: white;
+    font-family: "Barlow", sans-serif;
+    display: block;
+    text-align: center;
+    font-size: 5.5rem;
+    font-weight: bolder;
+   
+}
 /* Mobile Styles */
 @media (max-width: 768px) {
   .menu-icon {
@@ -165,6 +134,16 @@ nav article {
     }
 
 
+  .is-invalid {
+    border: 1px solid red !important;
+    background-color: #fff0f0;
+  }
+  .text-danger {
+    font-size: 0.9em;
+    color: red;
+  }
+
+
     </style>
 </head>
 <body>
@@ -175,15 +154,15 @@ nav article {
                </div> -->
 
                <div lass="logo-container">
-                <img src="{% static 'img/finalorange1.png' %}" alt="Logo Banner" class="logo-banner"> 
+                <img src="{% static 'img/finalwhite1.png' %}" alt="Logo Banner" class="logo-banner"  height="200px" width="200px"> 
                </div>
 
                <input type="checkbox" id="menu-toggle" />
                 <label for="menu-toggle" class="menu-icon">&#9776;</label>
              <div class="nav-links" >
-                <a href="/emplogin">Login</a>
-                <a href="/empregistration">Register</a>
-                <a href="/emp_profile">Employee Profile</a>
+                <a href="/login/">Login</a>
+                <a href="/register/">Register</a>
+                <a href="/emp_profile/">Employee Profile</a>
    </div>
        
   
@@ -193,6 +172,9 @@ nav article {
      
       </article>
       </nav>
+  <header > <h1 style="color: white; font-weight: 600; font-size: 5.5rem; justify-content: center; margin-bottom: 20px;">Employee Profile</h1></header>
+   
+    
     <h1>Hello {{username}}!</h1>
     {% if request.session.username %}
     <h2>Welcome, {{ request.session.username }}!</h2>
@@ -202,61 +184,141 @@ nav article {
         <h1>Employer Profile</h1>
        
         <!-- Display form -->
-        <form method="POST">
+        <form id="employeeForm"method="POST">
             {% csrf_token %}
            
             <div class="form-row">
               {{ form.name.label_tag }}
               {{ form.name }}
+              <div id="name_error" class="text-danger small"></div>
           </div>
           
           <div class="form-row">
               {{ form.email.label_tag }}
               {{ form.email }}
+              <div id="email_error" class="text-danger small"></div>
           </div>
           
           <div class="form-row">
               {{ form.phoneNo.label_tag }}
               {{ form.phoneNo }}
+              <div id="phone_error" class="text-danger small"></div>
           </div>
           
           <div class="form-row">
               {{ form.company_name.label_tag }}
               {{ form.company_name }}
+              <div id="comapany_name_error" class="text-danger small"></div>
           </div>
 
           <div class="form-row">
             {{ form.designation.label_tag }}
             {{ form.designation }}
+            <div id="designation_error" class="text-danger small"></div>
         </div>
         
         <div class="form-row">
             {{ form.location.label_tag }}
             {{ form.location }}
+            <div id="location_error" class="text-danger small"></div>
         </div>
         
         <div class="form-row">
             {{ form.sector.label_tag }}
             {{ form.sector }}
+            <div id="sector_error" class="text-danger small"></div>
         </div>
         
         <div class="form-row">
-            {{ form.companywebsite.label_tag }}
-            {{ form.companywebsite }}
+            {{ form.company_website.label_tag }}
+            {{ form.company_website }}
+            <div id="website_error" class="text-danger small"></div>
         </div>
         
-     
-          
-       
-
-
+       <!-- Submit button -->
+        {% if form.errors %}
+  <div class="alert alert-danger">
+    <ul>
+      {% for field in form %}
+        {% for error in field.errors %}
+          <li>{{ field.label }}: {{ error }}</li>
+        {% endfor %}
+      {% endfor %}
+      {% for error in form.non_field_errors %}
+        <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}
         
-            
-            <!-- Submit button -->
+         <button type="submit">Create Profile</button>
 
-            <button type="submit">Create Profile</button>
         </form>
+       
+<script>
+document.getElementById('employeeForm').addEventListener('submit', function (e) {
+    let isValid = true;
+
+    // Reset errors
+    document.querySelectorAll('.text-danger').forEach(el => el.innerText = '');
+    document.querySelectorAll('input').forEach(input => input.classList.remove('is-invalid'));
+
+    const name = document.getElementById('id_name');
+    const email = document.getElementById('id_email');
+    const phone = document.getElementById('id_phoneNo');
+    const companyName = document.getElementById('id_company_name');
+    const designation = document.getElementById('id_designation');
+    const location = document.getElementById('id_location');
+    const sector = document.getElementById('id_sector');
+    const website = document.getElementById('id_company_website');
+
+    // Character-only fields
+    const charFields = [
+        { field: name, id: 'name_error', label: 'Name' },
+        { field: companyName, id: 'company_name_error', label: 'Company Name' },
+        { field: designation, id: 'designation_error', label: 'Designation' },
+        { field: location, id: 'location_error', label: 'Location' },
+        { field: sector, id: 'sector_error', label: 'Sector' }
+    ];
+
+    charFields.forEach(({ field, id, label }) => {
+        if (!/^[A-Za-z\s]+$/.test(field.value.trim())) {
+            document.getElementById(id).innerText = `${label} should contain only letters.`;
+            field.classList.add('is-invalid');
+            isValid = false;
+        }
+    });
+
+    // Phone number: 10 digits
+    if (!/^\d{10}$/.test(phone.value.trim())) {
+        document.getElementById('phone_error').innerText = "Phone number must be exactly 10 digits.";
+        phone.classList.add('is-invalid');
+        isValid = false;
+    }
+
+    // Email validation
+    if (!/^\S+@\S+\.\S+$/.test(email.value.trim())) {
+        document.getElementById('email_error').innerText = "Enter a valid email address.";
+        email.classList.add('is-invalid');
+        isValid = false;
+    }
+
+    // Optional company website (validate only if not empty)
+    if (website.value.trim() !== '' && !/^https?:\/\/[^\s]+$/.test(website.value.trim())) {
+        document.getElementById('website_error').innerText = "Enter a valid website (http:// or https://).";
+        website.classList.add('is-invalid');
+        isValid = false;
+    }
+
+    if (!isValid) {
+        e.preventDefault(); 
+    }
+});
+</script>
+
     </div>
+
+<br><br><br><br><br>
     <footer>
         <div class="footer-content">
             <div class="footer-links">

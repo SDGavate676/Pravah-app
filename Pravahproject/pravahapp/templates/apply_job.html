@@ -26,7 +26,7 @@
 
         } */
 
-        .container {
+    .container {
     margin: 20px auto; /* Center horizontally */
     padding: 20px;
     border: 1px solid #0a0a0a;
@@ -53,6 +53,28 @@
         margin: 10px;
     }
 }
+
+.mb-3 {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .mb-3 label {
+        width: 110px; /* Adjust width for alignment */
+        font-weight: bold;
+    }
+
+    .mb-3 input,
+    .mb-3 select {
+        flex: 1;
+    }
+.is-invalid {
+  border-color: red !important;
+  box-shadow: none !important;
+}
+
+    
 
 
     </style>
@@ -103,8 +125,8 @@
             </div>
     
             <div class="mb-3">
-                {{ form.resume.label_tag }}
-                {{ form.resume }}
+                {{ form.cv_file.label_tag }}
+                {{ form.cv_file }}
             </div>
     
             <!-- <div class="text-center">
@@ -116,6 +138,57 @@
        
             <button type="submit">Submit</button>
         </form>
+<script>
+document.querySelector('form').addEventListener('submit', function (e) {
+    let isValid = true;
+
+    // Remove previous red borders
+    document.querySelectorAll('input, textarea, select').forEach(el => el.classList.remove('is-invalid'));
+
+    // Helpers
+    const isLetters = val => /^[A-Za-z\s.'\-]+$/.test(val.trim());
+    const isEmail = val => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val.trim());
+    const isPhone = val => /^\d{10}$/.test(val.trim());
+
+    // Full Name
+    const name = document.getElementById('id_full_name');
+    if (!isLetters(name.value)) {
+        name.classList.add('is-invalid');
+        isValid = false;
+    }
+
+    // Email
+    const email = document.getElementById('id_email');
+    if (!isEmail(email.value)) {
+        email.classList.add('is-invalid');
+        isValid = false;
+    }
+
+    // Phone Number
+    const phone = document.getElementById('id_phone_number');
+    if (!isPhone(phone.value)) {
+        phone.classList.add('is-invalid');
+        isValid = false;
+    }
+
+    // Job Position
+    const position = document.getElementById('id_job_position');
+    if (!isLetters(position.value)) {
+        position.classList.add('is-invalid');
+        isValid = false;
+    }
+
+    // Resume File (optional or required)
+    const resume = document.getElementById('id_cv_file');
+    if (!resume.value || !resume.value.match(/\.(pdf|doc|docx)$/i)) {
+        resume.classList.add('is-invalid');
+        isValid = false;
+    }
+
+    if (!isValid) e.preventDefault();
+});
+</script>
+
         </div>
         {% if success %}
         <div class="alert alert-success" role="alert">

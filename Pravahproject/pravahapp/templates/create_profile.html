@@ -1,3 +1,4 @@
+
 {% load static %}
 {% block content %}
 
@@ -6,10 +7,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Candidate Dashboard</title>
+    <title>Register</title>
     <link href="{% static 'style.css' %}" rel="stylesheet">
     <style>
-        h1{
+nav {
+    background-color :white;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+nav article {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    height: 200px;
+}
+
+header{
+  
+   
+    background-color: #15b8e1;
+    color: white;
+    padding: 1rem 2rem;
+    margin-top: 2rem;
+    text-align: center;
+    height: 160px;
+    margin-top: 0;
+    margin-bottom: .5rem;
+  
+}
+
+.h1{
+    color: white;
+    font-family: "Barlow", sans-serif;
+    display: block;
+    text-align: center;
+    font-size: 5.5rem;
+    font-weight: bolder;
+   
+}
+
+  h1{
            
             text-align: center;
         }
@@ -18,7 +57,7 @@
            
         }
 nav {
-       background-color:rgba(251, 151, 19, 0.996) ;
+       background-color:white ;
         padding: 1rem 2rem;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -29,72 +68,11 @@ nav article {
     align-items: center;
     flex-wrap: wrap;
 }
-        .logo {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* or center if preferred */
-    gap: 4px;
-}
-
-.logo-top {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.logo .symbol {
-    width: 48px;
-    height: 48px;
-}
-
-.logo .name {
-    font-size: 2.5rem;
-    font-weight: bolder;
-    color: #073479; /* or #0B8FAB based on your background */
-}
-
-.logo  .name .Span {
-    color:#0ec4fc
-}
-
-.logo .name:hover {
-    color:    #8A2BE2; /* or #F4A259 based on your background */
-}
-.logo .tagline {
-    font-size: 0.80rem;
-    color: rgb(20, 44, 92); /* soft white if navbar bg is dark */
-    margin-bottom: 5px;
-    margin-left: 30px;
-    font-weight:bolder;
-    align-items: center;
-    
-
-}
-.logo-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1px; /* spacing between banner and logo */
-    font-size: 1.2rem;
-}
-
-.logo-banner {
-    width: 120px; /* adjust based on design */
-    height: auto;
-    margin-bottom: 4px; 
-    border-color:rgba(235, 136, 7, 0.993) ;
-  
-
-}
-.logo-banner {
-  height: 180px;
-  width: 280px;
-}
-
+ 
 .menu-icon {
   display: none;
   font-size: 2rem;
-  color: white;
+  color: rgb(242, 139, 43);
   cursor: pointer;
 }
 
@@ -105,14 +83,19 @@ nav article {
 
 .nav-links a {
   text-decoration: none;
-  color: white;
-  font-weight: 500;
+  color: rgb(17, 216, 252);
+  font-weight: bold;
+  font-size: larger;
 }
 
 /* Hide menu checkbox */
 #menu-toggle {
   display: none;
 }
+.nav-links a:hover {
+    color: rgb(242, 139, 43);
+}
+
 
 /* Mobile Styles */
 @media (max-width: 768px) {
@@ -136,7 +119,11 @@ nav article {
     border-top: 1px solid rgba(255, 255, 255, 0.3);
   }
 
-  nav article {
+.nav-links a:hover {
+    color: rgb(242, 139, 43);
+}
+
+nav article {
     flex-direction: column;
     align-items: flex-start;
   }
@@ -147,68 +134,130 @@ nav article {
   }
 }
 
+.form-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .form-row label {
+        width: 100px; /* Adjust width for alignment */
+        font-weight: bold;
+    }
+
+    .form-row input,
+    .form-row select {
+        flex: 1;
+    }
+
+    .radio-group {
+        display: flex;
+        gap: 5px;
+    }
+
+    .radio-group label {
+        display: flex;
+        align-items: center;
+        font-weight:500;
+      
+        
+    }
+
+    @media (max-width: 600px) {
+
+        body {
+            font-size: 16px; /* Adjust base font size for better readability */
+        }
+        .container {
+            padding: 20px;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+        header{
+            padding: 1rem 1rem;
+            height: auto;
+            width: 100%;
+            margin-top: 0;
+            margin-bottom: 1rem;
+
+        }
+h1 {
+    width: 100%;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+    white-space: normal;
+    overflow-wrap: break-word;
+    text-align: center;
+}
+
+        .form-row {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .form-row label {
+            width: auto;
+            margin-bottom: 5px;
+        }
+     
+        
+         .radio-group {
+        display: flex;
+        gap: 5px;
+        }
+
+        .radio-group label {
+        display: flex;
+        align-items: center;
+        font-weight:500;
+      
+      }
+    }
+.logo-container {
+    width: 100%;
+    text-align: center;
+  }
+ 
+  .logo-banner {
+    width: 200px;
+    height: 150px;
+    height: auto;
+    margin-bottom: 4px;
+}
+
+   .is-invalid {
+    border: 1px solid red !important;
+    background-color: #fff0f0;
+  }
+  .text-danger {
+    font-size: 0.9em;
+    color: red;
+  }
+
+
 
 
     </style>
+
 </head>
 <body>
     <nav>
         <article>
-
             <div lass="logo-container">
-                <img src="{% static 'img/finalorange1.png' %}" alt="Logo Banner" class="logo-banner"> 
+                <img src="{% static 'img/finalwhite1.png' %}" alt="Logo Banner" class="logo-banner"  height="200px" width="200px"> 
                </div>
-
-               <input type="checkbox" id="menu-toggle" />
+          <input type="checkbox" id="menu-toggle" />
                 <label for="menu-toggle" class="menu-icon">&#9776;</label>
              <div class="nav-links" >
-                <a href="/login">Login</a>
-                <a href="/register">Register</a>
-                <a href="/create_profile">Candidate Profile</a>
-   </div>
-            <!-- <div>
-                <img src="{% static 'img/finalorange1.png' %}" alt="Logo Banner" style="height: 180px; width: 280px; "> 
-               </div> -->
-            <!-- <div class="logo-wrapper"> -->
-                <!-- Image above the logo -->
-                <!-- <img src="{% static 'img/faintorange.png' %}" alt="Logo Banner" class="logo-banner">
-            <div class="logo">
-                <div class="logo-top"> -->
-                  <!-- <svg class="symbol" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 10C20 20 20 44 10 54" stroke="#0B8FAB" stroke-width="4" stroke-linecap="round"/>
-                    <path d="M54 10C44 20 44 44 54 54" stroke="#F4A259" stroke-width="4" stroke-linecap="round"/>
-                    <path d="M10 54C20 44 44 44 54 54" stroke="#0B3954" stroke-width="2" stroke-linecap="round"/>
-                  </svg> -->
-                    <!-- <img class="symbol" src="{% static 'img/logo.jpeg' %}" alt="Logo" style="width: 48px; height: 48px;"> -->
-                  <!-- <div class="name">pravah.<span  class="Span">org</span></div>
-                </div>
-                <div class="tagline">Connecting Talent to Opportunity</div>
-              </div>
-              </div> -->
-
-              <!-- <div class="logo">
-                <div class="logo-top">
-                  <svg class="symbol" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 10C20 20 20 44 10 54" stroke="#0B8FAB" stroke-width="4" stroke-linecap="round"/>
-                    <path d="M54 10C44 20 44 44 54 54" stroke="#F4A259" stroke-width="4" stroke-linecap="round"/>
-                    <path d="M10 54C20 44 44 44 54 54" stroke="#0B3954" stroke-width="2" stroke-linecap="round"/>
-                  </svg>
-                  <div class="name">PRAVAH</div>
-                </div>
-                <div class="tagline">Bridging Talents to Opportunity</div>
-              </div> -->
-<!--               
-            <a href="/login">Login</a>
-            <a href="/register">Register</a>
-            <a href="/create_profile">Candidate Profile</a> -->
-  
-     
-    
- 
-     
-      </article>
+                <a href="/login/">Login</a>
+                <a href="/register/">Register</a>
+                <a href="/create_profile/">Candidate Profile</a>
+</article>
       </nav>
-    <h1>Hello {{username}}!</h1>
+<header > <h1 style="color: white; font-weight: 600; font-size: 5.5rem; justify-content: center; margin-bottom: 20px;">Create Profile</h1></header>
+
+ <h1>Hello {{username}}!</h1>
     {% if request.session.username %}
     <h2>Welcome, {{ request.session.username }}!</h2>
     {% endif %}
@@ -235,72 +284,209 @@ nav article {
         </script>
        
         <!-- Display form -->
-        <form method="POST">
-            {% csrf_token %}
+        <!-- <form  id="profileForm" method="POST">
+            {% csrf_token %} -->
             <!-- <label for="id_gender">Gender:</label>
             <ul>
                 {% for radio in form.gender %}
                     <li>{{ radio.tag }} {{ radio.choice_label }}</li>
                 {% endfor %}
             </ul> -->
-        
-
-            {{ form.as_p }}
-            
-            
-            <!-- <div class="form-group">
-                <label for="id_name">Name:</label>
+        <form id="profileForm" method="POST" >
+              {% csrf_token %}
+             
+              <div class="form-row">
+                {{ form.name.label_tag }}
                 {{ form.name }}
+               
             </div>
             
-            <div class="form-group">
-                <label for="id_email">Email:</label>
+            <div class="form-row">
+                {{ form.email.label_tag }}
                 {{ form.email }}
+            
             </div>
             
-            <div class="form-group">
-                <label for="id_dob">Date of Birth:</label>
-                {{ form.dob }}
-            </div>
-            
-            <div class="form-group">
-                <label for="id_age">Age:</label>
-                {{ form.age }}
-            </div>
-            
-            <div class="form-group">
-                <label for="id_gender">Gender:</label>
-                {{ form.gender }}
-            </div>
-            
-            <div class="form-group">
-                <label for="id_address">Address:</label>
-                {{ form.address }}
-            </div>
-            
-            <div class="form-group">
-                <label for="id_contact">Contact Number:</label>
+            <div class="form-row">
+                {{ form.contact.label_tag }}
                 {{ form.contact }}
-            </div> -->
-
-            <!-- Submit button -->
-
-            <button type="submit">Create Profile</button>
-        </form>
-    </div>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-links">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
-                <a href="#">Contact Us</a>
+              
             </div>
-            <div class="footer-copy">
-                <p>&copy; 2025 PRAVAH. All rights reserved.</p>
+            
+            <div class="form-row">
+                {{ form.dob.label_tag }}
+                {{ form.dob }}
+               
             </div>
+  
+            <div class="form-row">
+              {{ form.age.label_tag }}
+              {{ form.age }}
+            
+          </div>
+
+          <div class="form-row">
+            {{ form.gender.label_tag }}
+            <div class="radio-group">
+                {% for radio in form.gender %}
+                    <label>
+                        {{ radio.tag }} {{ radio.choice_label }}
+                    </label>
+                {% endfor %}
+            </div>
+           
         </div>
-    </footer>
+          
+        
+          <div class="form-row">
+              {{ form.village.label_tag }}
+              {{ form.village }}
+              
+          </div>
+          
+          <div class="form-row">
+              {{ form.taluka.label_tag }}
+              {{ form.taluka }}
+             
+          </div>
+
+          <div class="form-row">
+            {{ form.district.label_tag }}
+            {{ form.district }}
+            
+        </div>
+
+        <!-- <div class="form-row">
+          {{ form.city.label_tag }}
+          {{ form.city }}
+      </div> -->
+      
+      <div class="form-row">
+          {{ form.state.label_tag }}
+          {{ form.state }}
+        
+      </div>
+      
+      <div class="form-row">
+          {{ form.country.label_tag }}
+          {{ form.country }}
+         </div>
+      
+      <div class="form-row">
+          {{ form.postal_code.label_tag }}
+          {{ form.postal_code}}
+       
+      </div>
+      
+       
+            <!-- Submit button -->
+            
+            <button type="submit">Create Profile</button>
+            
+        </form>
+     <script>
+  const form = document.getElementById('profileForm');
+  form.addEventListener('submit', function(e) {
+    let isValid = true;
+
+    // Clear any previous red borders
+    form.querySelectorAll('input, select, textarea').forEach(el => {
+      el.classList.remove('is-invalid');
+    });
+
+    const isLetters = val => /^[A-Za-z\s]+$/.test(val.trim());
+    const isDigits  = val => /^\d+$/.test(val.trim());
+    const isEmail   = val => /^\S+@\S+\.\S+$/.test(val.trim());
+
+    // grab fields once
+    const name       = document.getElementById('id_name');
+    const email      = document.getElementById('id_email');
+    const contact    = document.getElementById('id_contact');
+    const dob        = document.getElementById('id_dob');
+    const age        = document.getElementById('id_age');
+    const village    = document.getElementById('id_village');
+    const taluka     = document.getElementById('id_taluka');
+    const district   = document.getElementById('id_district');
+    const state      = document.getElementById('id_state');
+    const country    = document.getElementById('id_country');
+    const postalCode = document.getElementById('id_postal_code');
+
+    // 1) Name must be letters
+    if (!isLetters(name.value)) {
+      name.classList.add('is-invalid');
+      isValid = false;
+    }
+    // 2) Email
+    if (!isEmail(email.value)) {
+      email.classList.add('is-invalid');
+      isValid = false;
+    }
+    // 3) Contact (10 digits)
+    if (!/^\d{10}$/.test(contact.value.trim())) {
+      contact.classList.add('is-invalid');
+      isValid = false;
+    }
+    // 4) DOB required
+    if (dob.value.trim() === '') {
+      dob.classList.add('is-invalid');
+      isValid = false;
+    }
+    // 5) Age (1–120)
+    const ageVal = parseInt(age.value, 10);
+    if (!isDigits(age.value) || ageVal < 1 || ageVal > 120) {
+      age.classList.add('is-invalid');
+      isValid = false;
+    }
+    // 6) Gender radio
+    const genderRadios = form.querySelectorAll('input[name="gender"]');
+    if (![...genderRadios].some(r=>r.checked)) {
+      // apply red border to first radio to signal error
+      genderRadios[0].classList.add('is-invalid');
+      isValid = false;
+    }
+    // 7) Text-only fields
+    [village, taluka, district, state, country].forEach(field => {
+      if (!isLetters(field.value)) {
+        field.classList.add('is-invalid');
+        isValid = false;
+      }
+    });
+    // 8) Postal code (6 digits)
+    if (!/^\d{6}$/.test(postalCode.value.trim())) {
+      postalCode.classList.add('is-invalid');
+      isValid = false;
+    }
+
+    if (!isValid) {
+      e.preventDefault();  // only block if something’s invalid
+    }
+  });
+ </script> 
+    </div>
+     
+
+<br>
+<br>
+<br>
+<br>
+    
+<footer>
+    <div class="footer-content">
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Contact Us</a>
+        </div>
+        <div class="footer-copy">
+            <p>&copy; 2025 PRAVAH. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
 </body>
+
+
 </html>
-{% endblock  %}
+
+{% endblock %}
+

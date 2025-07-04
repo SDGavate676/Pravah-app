@@ -98,24 +98,13 @@
             color: #073479; /* or #0B8FAB based on your background */
         }
         
-        .form-group{
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-
-        }
-
-
-    
-
-
-
-
-
        
 
-        
-            </style>
+
+  
+  
+
+</style>
 </head>
 
 <div>
@@ -133,12 +122,15 @@
             </div>
             <div class="col-md-6 text-center text-lg-end">
                 <div class="position-relative d-inline-flex align-items-center bg-primary text-white top-shape px-5">
-                    <div class="me-3 pe-3 border-end py-2">
-                        <p class="m-0"><i class="fa fa-envelope-open me-2"></i>info@example.com</p>
+                   <div class="me-3 pe-3 border-end py-2">
+                        <p class="m-0"><i class="fa fa-user me-2"></i><span>Hello, {{ request.user.username }}</span></p>
                     </div>
                     <div class="py-2">
-                        <p class="m-0"><i class="fa fa-phone-alt me-2"></i>+012 345 6789</p>
-                    </div>
+                    <p class="m-0 text-white">
+                    <i class="fa fa-sign-out-alt me-2"></i>
+                    <a href="/user_logout/" class="text-white text-decoration-none">Logout</a>
+                    </p>
+                   </div>
                 </div>
             </div>
         </div>
@@ -164,38 +156,43 @@
                 <div class="tagline">Connecting Talent to Opportunity</div>
               </div>
               </div> -->
-              <img src="{% static 'img/finalwhite1.png' %}" alt="Logo Banner"  style="height: 200px; width: 280px;"> 
+              <img src="{% static 'img/finalwhite1.png' %}" alt="Logo Banner"  style="height: 200px; width: 200px;"> 
             <!-- <h1 class="m-0 text-uppercase text-primary"><i class="far fa-smile text-primary me-2"></i>Pravah Org</h1>  -->
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
+<div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto py-0 me-n3">
-                <a href="/" class="nav-item nav-link active">Home</a>
-                <a href="/about/" class="nav-item nav-link">About</a>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Our Services</a>
-                    <div class="dropdown-menu m-0">
-                     
-                        <a href="/ourservices/" class="dropdown-item">Our Services</a>
-                        <a href="/service/" class="dropdown-item">Service</a>
-                     
-                    </div>
-                </div>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Career</a>
-                    <div class="dropdown-menu m-0">
-                     
-                        <a href="/features/" class="dropdown-item">Features</a>
-                        <a href="/jobpostings/" class="dropdown-item">Jobpostings</a>
-                    </div>
-                </div>
                 
-                <a href="/contact/" class="nav-item nav-link">Contact</a>
-             
-            </div>
-        </div>
+                <a href="/emp-dashboard/" class="nav-item nav-link">Home</a>
+                <a href="/employee_dashboard/" class="nav-item nav-link">My Profile</a>
+                  <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Job Details</a>
+                   <div class="dropdown-menu m-0">
+  <a href="/jobpostings/" class="dropdown-item" style="font-size: larger; color: black;">Jobpostings</a>
+
+  <div class="dropdown-divider"></div>
+  <h6 class="dropdown-header" style="font-size: larger; color: black; font-weight: bolder;">Edit Jobs</h6>
+  
+  {% for job in jobs %}
+    <a href="{% url 'jobedit' job.id %}" class="dropdown-item">Edit {{ job.job_title }}</a>
+     {% if job.application_deadline < today %}
+        <a href="{% url 'jobdelete' job.id %}" class="dropdown-item text-danger ps-4">
+          🗑️ Delete {{ job.job_title }}
+        </a>
+      {% else %}
+        <span class="dropdown-item text-muted ps-4">⏳ Deadline not passed</span>
+      {% endif %}
+    {% empty %}
+      <span class="dropdown-item text-muted">No Jobs</span>
+    {% endfor %}
+  
+</div>
+  
+</div>
+ </div>
+ </div>
     </nav>
     <!-- Navbar End -->
 
@@ -214,273 +211,287 @@
     <!-- Page Header End -->
 
 
-    <!--jobpostings Start -->
-    <!-- <div class="container-fluid bg-secondary px-0">
-        <div class="row g-0">
-            <div class="col-lg-6 py-6 px-5">
-                <h1 class="display-5 mb-4"> Post a Job</h1>
-                <p>Fill out the form below to post a new job opportunity.</p>
-                <form>
-                    <div class="row g-3">
-                        <div class="col-6">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="form-floating-1" placeholder="John Doe">
-                                <label for="form-floating-1">Job Title</label>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="form-floating-2" placeholder="name@example.com">
-                                <label for="form-floating-2">Company Name</label>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="form-floating-3" placeholder="Subject">
-                                <label for="form-floating-3">Job Location</label>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-floating">
-                                <textarea class="form-control" placeholder="Message" id="form-floating-4" style="height: 150px"></textarea>
-                                <label for="form-floating-4">Job Description</label>
-                              </div>
-                        </div>
-                     
-                        <div class="col-12">
-                            <div class="form-floating">
-                                <input type="number" class="form-control" id="form-floating-3" placeholder="Subject">
-                                <label for="form-floating-3">Salary</label>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="form-floating-3" placeholder="Subject">
-                                <label for="form-floating-3">Employment Type</label>
-                                <select class="form-control" id="employmentType" name="employmentType" required>
-                                    <option value="Full-time">Full-time</option>
-                                    <option value="Part-time">Part-time</option>
-                                    <option value="Internship">Internship</option>
-                                    <option value="Freelance">Freelance</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-floating">
-                                <input type="date" class="form-control" id="form-floating-3" placeholder="Subject">
-                                <label for="form-floating-3">Application Deadline</label>
-                            </div>
-                        </div>
-                       
-                        <div class="col-12">
-                            <button class="btn btn-primary w-100 py-3" type="submit">Submit</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="col-lg-6" style="min-height: 400px;">
-                <div class="position-relative h-100">
-                    <iframe class="position-relative w-100 h-100"
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3001156.4288297426!2d-78.01371936852176!3d42.72876761954724!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4ccc4bf0f123a5a9%3A0xddcfc6c1de189567!2sNew%20York%2C%20USA!5e0!3m2!1sen!2sbd!4v1603794290143!5m2!1sen!2sbd"
-                        frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-                </div>
-            </div>
+
+    
+    <div class="container py-5">
+        <div class="row justify-content-center">
+          <div class="col-12  ">
+            <h1 class="display-5 text-center "><span>Post a Job</h1>
+            <p class="text-center  mb-5"><span>Fill out the form below to post a new job opportunity.</span></p>
+
+    <form  id="jobpostingForm" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        
+        <div class="mb-3 row align-items-center">
+          
+          <label for="{{ form.job_title.id_for_label }}" 
+                 class="col-sm-3 col-form-label">
+            {{ form.job_title.label }}
+          </label>
+          
+          <div class="col-sm-9">
+            {{ form.job_title }}
+          </div>
+         <div id="job_title_error" class="text-danger small mt-1"></div>
         </div>
-    </div> -->
-    <!-- Jobpostings End -->
-     <!-- Job Posting Form -->
-<!-- <div class="container-fluid bg-secondary px-0">
-    <div class="row g-0">
-        <div class="col-lg-6 py-6 px-5">
-            <h1 class="display-5 mb-4">Post a Job</h1>
-            <p>Fill out the form below to post a new job opportunity.</p>
-            <form method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                {% if form.errors %}
-                <div style="color: red;">
-                    <p>There were errors with your submission:</p>
-                    <ul>
-                        {% for field in form %}
-                            {% for error in field.errors %}
-                                <li>{{ error }}</li>
-                            {% endfor %}
-                        {% endfor %}
-                    </ul>
-                </div>
-                 {% endif %}
-                {{ form.as_p }} -->
-                <!-- <div class="row g-3">
-                    <div class="col-6">
-                        <div class="form-floating">
-                        <label for="form-floating-1">Job Title</label>
-                            {{ form.job_title }}
-                         
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-floating">
-                            {{ form.company_name }}
-                            <label for="form-floating-2">Company Name</label>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="form-floating">
-                            {{ form.job_location }}
-                            <label for="form-floating-3">Job Location</label>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="form-floating">
-                            {{ form.job_description }}
-                            <label for="form-floating-4">Job Description</label>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="form-floating">
-                            {{ form.salary }}
-                            <label for="form-floating-5">Salary</label>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="form-floating">
-                            {{ form.employment_type }}
-                            <label for="form-floating-6">Employment Type</label>
-                        </div>
-                    </div>-->
-                    <!-- <div class="col-12">
-                        <div class="form-floating">
-                            {{ form.application_deadline }} -->
-                            <!-- <input type="date" > -->
-                            
-                        <!-- </div>
-                    </div>  -->
-                    <!-- <div class="col-12">
-                        <button class="btn btn-primary w-100 py-3" type="submit">Submit</button>
-                    </div>
-                </div> 
-            </form>
+      
+        
+        <div class="mb-3 row align-items-center">
+          <label for="{{ form.company_name.id_for_label }}" 
+                 class="col-sm-3 col-form-label">
+            {{ form.company_name.label }}
+          </label>
+          <div class="col-sm-9">
+            {{ form.company_name }}
+          </div>
+           <div id="company_name_error" class="text-danger small position-absolute" style="top: 100%; left: 0;"></div>
         </div>
+      
+        
+        <div class="mb-3 row align-items-center">
+          <label for="{{ form.job_location.id_for_label }}" 
+                 class="col-sm-3 col-form-label">
+            {{ form.job_location.label }}
+          </label>
+          <div class="col-sm-9">
+            {{ form.job_location }}
+          </div>
+           <div id="job_location_error" class="text-danger small position-absolute" style="top: 100%; left: 0;"></div>
+        </div>
+      
+    
+        <div class="mb-3 row align-items-center">
+          <label for="{{ form.salary.id_for_label }}" 
+                 class="col-sm-3 col-form-label">
+            {{ form.salary.label }}
+          </label>
+          <div class="col-sm-9">
+            {{ form.salary }}
+          </div>
+        </div>
+
+
+        
+
+  <div class="mb-3 row">
+    <label for="{{ form.job_description.id_for_label }}" class="col-sm-3 col-form-label">
+      {{ form.job_description.label }}
+    </label>
+    <div class="col-sm-9">
+      {{ form.job_description }}
     </div>
-</div> -->
+  </div>
 
 
-
-
-<div class="container">
-        <div class="col-lg-6 py-6 px-5" style="justify-content: first baseline;">
-            <h1 class="display-5 mb-4">Post a Job</h1>
-            
-            <p>Fill out the form below to post a new job opportunity.</p>
-            
-            <form method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                
-                <!-- Display Form Errors -->
-                {% if form.errors %}
-                <div style="color: red;">
-                    <p>There were errors with your submission:</p>
-                    <ul>
-                        {% for field in form %}
-                            {% for error in field.errors %}
-                                <li>{{ error }}</li>
-                            {% endfor %}
-                        {% endfor %}
-                    </ul>
-                </div>
-                {% endif %}
-                
-                <!-- Render Form Fields -->
-                <div class="form-group">
-                    {{ form.job_title.label }} 
-                    {{ form.job_title }} 
-                </div>
-                <br>
-                <div class="form-group">
-                    {{ form.company_name.label }} 
-                    {{ form.company_name }} 
-                </div>
-                <br>
-                <div class="form-group">
-                    {{ form.job_location.label }} 
-                    {{ form.job_location }} 
-                </div>
-                <br>
-                <div class="form-group">
-                    {{ form.job_description.label }} 
-                    {{ form.job_description }} 
-                </div>
-                <br>
-                <div class="form-group">
-                    {{ form.salary.label }} 
-                    {{ form.salary }} 
-                </div>
-                <br>
-                <div class="form-group">
-                    {{ form.employment_type.label }} 
-                    {{ form.employment_type }} 
-                </div>
-                <br>
-                <div class="form-group">
-                    {{ form.application_deadline.label }} 
-                    {{ form.application_deadline }} 
-                </div>
-
-                <!-- Submit Button -->
-                <button type="submit" class="btn btn-info">Post Job</button>
-            </form>
-        </div>
+  <div class="mb-3 row align-items-center">
+    <label for="{{ form.employment_type.id_for_label }}" class="col-sm-3 col-form-label">
+      {{ form.employment_type.label }}
+    </label>
+    <div class="col-sm-9">
+      {{ form.employment_type }}
     </div>
-</div>
-</div>
-</div>
+  </div>
 
+  
+  <div class="mb-3 row align-items-center">
+    <label for="{{ form.application_deadline.id_for_label }}" class="col-sm-3 col-form-label">
+      {{ form.application_deadline.label }}
+    </label>
+    <div class="col-sm-9">
+      {{ form.application_deadline }}
+    </div>
+  </div>
+      
+        
+        <div class="text-center mt-4">
+          <button id="postJobButton" type="submit" class="btn btn-primary px-5">Post Job</button>
+        </div>
+      </form>
+<script>
+document.getElementById('jobpostingForm').addEventListener('submit', function (e) {
+  let isValid = true;
 
+  // Remove previous validation styles
+  document.querySelectorAll('input, select, textarea').forEach(el => el.classList.remove('is-invalid'));
 
+  const isLetters = (value) => /^[A-Za-z\s.,\-&()']+$/.test(value.trim());
+  const isDigits = (value) => /^\d+$/.test(value.trim());
+
+  // Job Title
+  const jobTitle = document.getElementById('id_job_title');
+  if (!isLetters(jobTitle.value)) {
+    jobTitle.classList.add('is-invalid');
+    isValid = false;
+  }
+
+  // Company Name
+  const companyName = document.getElementById('id_company_name');
+  if (!isLetters(companyName.value)) {
+    companyName.classList.add('is-invalid');
+    isValid = false;
+  }
+
+  // Job Location
+  const jobLocation = document.getElementById('id_job_location');
+  if (!isLetters(jobLocation.value)) {
+    jobLocation.classList.add('is-invalid');
+    isValid = false;
+  }
+
+  // Salary
+  const salary = document.getElementById('id_salary');
+  if (salary.value.trim() && !isDigits(salary.value)) {
+    salary.classList.add('is-invalid');
+    isValid = false;
+  }
+
+  // Job Description
+  const description = document.getElementById('id_job_description');
+  if (!description.value.trim()) {
+    description.classList.add('is-invalid');
+    isValid = false;
+  }
+
+  // Employment Type
+  const empType = document.getElementById('id_employment_type');
+  if (!empType.value.trim()) {
+    empType.classList.add('is-invalid');
+    isValid = false;
+  }
+
+  // Application Deadline
+  const deadline = document.getElementById('id_application_deadline');
+  if (!deadline.value.trim()) {
+    deadline.classList.add('is-invalid');
+    isValid = false;
+  }
+
+  if (!isValid) e.preventDefault();
+});
+</script>
+
+      <!-- <script>
+document.getElementById('jobpostingForm').addEventListener('submit', function (e) {
+  let isValid = true;
+
+  // Remove previous errors
+  document.querySelectorAll('.text-danger').forEach(el => el.innerText = '');
+  document.querySelectorAll('input, select, textarea').forEach(el => el.classList.remove('is-invalid'));
+
+  // Helper functions
+  const isLetters = (value) => /^[A-Za-z\s.,\-&()']+$/.test(value.trim());
+  const isDigits = (value) => /^\d+$/.test(value.trim());
+
+  // Job Title
+  const jobTitle = document.getElementById('id_job_title');
+  if (!isLetters(jobTitle.value)) {
+    document.getElementById('job_title_error').innerText = 'Enter a valid job title.';
+    jobTitle.classList.add('is-invalid');
+    isValid = false;
+  }
+
+  // Company Name
+  const companyName = document.getElementById('id_company_name');
+  if (!isLetters(companyName.value)) {
+    document.getElementById('company_name_error').innerText = 'Enter a valid company name.';
+    companyName.classList.add('is-invalid');
+    isValid = false;
+  }
+
+  // Job Location
+  const jobLocation = document.getElementById('id_job_location');
+  if (!isLetters(jobLocation.value)) {
+    document.getElementById('job_location_error').innerText = 'Enter a valid location.';
+    jobLocation.classList.add('is-invalid');
+    isValid = false;
+  }
+
+  // Salary
+  const salary = document.getElementById('id_salary');
+  if (salary.value.trim() && !isDigits(salary.value)) {
+    salary.classList.add('is-invalid');
+    isValid = false;
+    alert('Salary must be a number.');
+  }
+
+  // Job Description
+  const description = document.getElementById('id_job_description');
+  if (!description.value.trim()) {
+    description.classList.add('is-invalid');
+    alert('Job description cannot be empty.');
+    isValid = false;
+  }
+
+  // Employment Type
+  const empType = document.getElementById('id_employment_type');
+  if (!empType.value.trim()) {
+    empType.classList.add('is-invalid');
+    alert('Select employment type.');
+    isValid = false;
+  }
+
+  // Application Deadline
+  const deadline = document.getElementById('id_application_deadline');
+  if (!deadline.value.trim()) {
+    deadline.classList.add('is-invalid');
+    alert('Please provide an application deadline.');
+    isValid = false;
+  }
+
+  if (!isValid) e.preventDefault();
+});
+</script> -->
+
+  </div>
+    </div>
+  </div>
+   
 
     <!-- Footer Start -->
    
     <div class="container-fluid bg-dark text-secondary p-5">
-        <div class="row g-5">
-            <div class="col-lg-3 col-md-6">
-                <h3 class="text-white mb-4">Quick Links</h3>
-                <div class="d-flex flex-column justify-content-start">
-                    <a class="text-secondary mb-2" href="#"><i class="bi bi-arrow-right text-info me-2"></i>Home</a>
-                    <a class="text-secondary mb-2" href="#"><i class="bi bi-arrow-right text-info me-2"></i>About Us</a>
-                    <a class="text-secondary mb-2" href="#"><i class="bi bi-arrow-right text-info me-2"></i>Our Services</a>
-                    <a class="text-secondary mb-2" href="#"><i class="bi bi-arrow-right text-info me-2"></i>Latest Blog Post</a>
-                    <a class="text-secondary" href="#"><i class="bi bi-arrow-right text-info me-2"></i>Contact Us</a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <h3 class="text-white mb-4">Popular Links</h3>
-                <div class="d-flex flex-column justify-content-start">
-                    <a class="text-secondary mb-2" href="#"><i class="bi bi-arrow-right text-info me-2"></i>Home</a>
-                    <a class="text-secondary mb-2" href="#"><i class="bi bi-arrow-right text-info me-2"></i>About Us</a>
-                    <a class="text-secondary mb-2" href="#"><i class="bi bi-arrow-right text-info me-2"></i>Our Services</a>
-                    <a class="text-secondary mb-2" href="#"><i class="bi bi-arrow-right text-info me-2"></i>Latest Blog Post</a>
-                    <a class="text-secondary" href="#"><i class="bi bi-arrow-right text-info me-2"></i>Contact Us</a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <h3 class="text-white mb-4">Get In Touch</h3>
-                <p class="mb-2"><i class="bi bi-geo-alt text-info me-2"></i>123 Street, New York, USA</p>
-                <p class="mb-2"><i class="static 'bi bi-envelope-open text-info me-2"></i>info@example.com</p>
-                <p class="mb-0"><i class="static 'bi bi-telephone text-info me-2"></i>+012 345 67890</p>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <h3 class="text-white mb-4">Follow Us</h3>
-                <div class="d-flex">
-                    <a class="btn btn-lg btn-info btn-lg-square rounded-circle me-2" href="#"><i class="fab fa-twitter fw-normal"></i></a>
-                    <a class="btn btn-lg btn-info btn-lg-square rounded-circle me-2" href="#"><i class="fab fa-facebook-f fw-normal"></i></a>
-                    <a class="btn btn-lg btn-info btn-lg-square rounded-circle me-2" href="#"><i class="fab fa-linkedin-in fw-normal"></i></a>
-                    <a class="btn btn-lg btn-info btn-lg-square rounded-circle" href="#"><i class="fab fa-instagram fw-normal"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid bg-dark text-secondary text-center border-top py-4 px-5" style="border-color: rgba(256, 256, 256, .1) !important;">
-        <p class="m-0">&copy; <a class="text-secondary border-bottom" href="#">Your Site Name</a>. All Rights Reserved. Designed by <a class="text-secondary border-bottom" href="https://htmlcodex.com">HTML Codex</a></p>
-    </div>
+      <div class="row g-5">
+          <div class="col-lg-3 col-md-6">
+              <h3 class="text-white mb-4">Quick Links</h3>
+              <div class="d-flex flex-column justify-content-start">
+                  <a class="text-secondary mb-2" href="/"><i class="bi bi-arrow-right text-info me-2"></i>Home</a>
+                  <a class="text-secondary mb-2" href="/about/"><i class="bi bi-arrow-right text-info me-2"></i>About Us</a>
+                  <a class="text-secondary mb-2" href="/ourservices/"><i class="bi bi-arrow-right text-info me-2"></i>Our Services</a>
+                  <a class="text-secondary mb-2" href="/features/"><i class="bi bi-arrow-right text-info me-2"></i>Career</a>
+                  <a class="text-secondary" href="/contact/"><i class="bi bi-arrow-right text-info me-2"></i>Contact Us</a>
+              </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+              <h3 class="text-white mb-4">Popular Links</h3>
+              <div class="d-flex flex-column justify-content-start">
+                  <a class="text-secondary mb-2" href="/"><i class="bi bi-arrow-right text-info me-2"></i>Home</a>
+                  <a class="text-secondary mb-2" href="/about/"><i class="bi bi-arrow-right text-info me-2"></i>About Us</a>
+                  <a class="text-secondary mb-2" href="/ourservices/"><i class="bi bi-arrow-right text-info me-2"></i>Our Services</a>
+                  <a class="text-secondary mb-2" href="/features/"><i class="bi bi-arrow-right text-info me-2"></i>Career</a>
+                  <a class="text-secondary" href="/contact/"><i class="bi bi-arrow-right text-info me-2"></i>Contact Us</a>
+              </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+              <h3 class="text-white mb-4">Get In Touch</h3>
+              <p class="mb-2"><i class="bi bi-geo-alt text-info me-2"></i>123 Street, New York, USA</p>
+              <p class="mb-2"><i class="static 'bi bi-envelope-open text-info me-2"></i>info@example.com</p>
+              <p class="mb-0"><i class="static 'bi bi-telephone text-info me-2"></i>+012 345 67890</p>
+          </div>
+          <div class="col-lg-3 col-md-6">
+              <h3 class="text-white mb-4">Follow Us</h3>
+              <div class="d-flex">
+                  <a class="btn btn-lg btn-info btn-lg-square rounded-circle me-2" href="#"><i class="fab fa-twitter fw-normal"></i></a>
+                  <a class="btn btn-lg btn-info btn-lg-square rounded-circle me-2" href="#"><i class="fab fa-facebook-f fw-normal"></i></a>
+                  <a class="btn btn-lg btn-info btn-lg-square rounded-circle me-2" href="#"><i class="fab fa-linkedin-in fw-normal"></i></a>
+                  <a class="btn btn-lg btn-info btn-lg-square rounded-circle" href="#"><i class="fab fa-instagram fw-normal"></i></a>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="container-fluid bg-dark text-secondary text-center border-top py-4 px-5" style="border-color: rgba(256, 256, 256, .1) !important;">
+      <p class="m-0">&copy; <a class="text-secondary border-bottom" href="/">Pravah Organization</a>. All Rights Reserved. Designed by <a class="text-secondary border-bottom" href="https://htmlcodex.com">Pravah Organization</a></p>
+  </div>
     <!-- Footer End -->
 
 

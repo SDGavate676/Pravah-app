@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout</title>
+</head>
+<body>
+    <form id="admin-logout-form" method="POST" action="{% url 'admin_logout' %}" style="display: none;">
+    {% csrf_token %}
+</form>
+
+<button id="admin-logout-btn" class="btn btn-outline-light btn-sm">Logout</button>
+
+<script>
+    document.getElementById('admin-logout-btn').addEventListener('click', function () {
+        document.getElementById('admin-logout-form').submit();
+    });
+</script>
+
+</body>
+</html>

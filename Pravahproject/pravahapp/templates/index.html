@@ -129,31 +129,41 @@ input{
 
 }
 
-.container {
+.boxes-container{
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   gap: 40px;
   flex-wrap: wrap;
   padding: 20px;
+
 }
 
 .box {
-  flex: 1;
+  flex:  0 1 45%;
+  max-width: 45%;  
   min-width: 300px;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 10px;
   background-color: #f9f9f9;
   border-color: #45cdf7;
+  
+  
 }
 
-ul {
+.box img {
+      width: 100%;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+    }
+
+.box ul {
   list-style-type: square;
   padding-left: 20px;
   color: black;
 }
 
-li {
+.box li {
   margin-bottom: 15px;
   color: black;
 }
@@ -171,8 +181,19 @@ li {
   color: #555;
 }
 
+.custom-container {
+    background-color: rgba(253, 246, 246, 0.884);
+    height: 900px;
+}
 
-       
+/* Mobile view */
+@media (max-width: 576px) {
+    .custom-container {
+        height: auto;
+        padding-bottom: 2rem;
+    }
+}
+
 
 
 
@@ -232,7 +253,7 @@ li {
                 <!-- <img src="{% static 'img/finalwhite1.png' %}" alt="Logo Banner" class="logo-banner"> -->
             <!-- <div class="logo">
                 <div class="logo-top"> -->
-                    <img src="{% static 'img/finalwhite1.png' %}" alt="Logo Banner"  style="height: 200px; width: 280px;"> 
+                    <img src="{% static 'img/finalwhite1.png' %}" alt="Logo Banner"  style="height: 200px; width: 200px;"> 
              
                 <!-- <div class="name">pravah.<span  class="Span">org</span></div>
                 </div>
@@ -246,14 +267,15 @@ li {
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto py-0 me-n3">
-                <div class="nav-item dropdown">
+                <!-- <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Login</a>
                     <div class="dropdown-menu m-0">
                      
                         <a href="/login/" class="dropdown-item">Candidate Login</a>
                         <a href="/emplogin/" class="dropdown-item">Employee Login</a>
                     </div>
-                </div>
+                </div> -->
+                <a href="/login/" class="nav-item nav-link"> Login</a>
                 <a href="/" class="nav-item nav-link active">Home</a>
                 <a href="/about/" class="nav-item nav-link">About</a>
                 <div class="nav-item dropdown">
@@ -290,7 +312,7 @@ li {
                 <div class="carousel-item active">
                     <img class="w-100" src="{%static  'img/carousel-1.jpg' %}" alt="Image">
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                        <div class="p-3" style="max-width: 900px;">
+                        <div class="p-3" style="max-width: 900px; ">
                             <h5 class="text-white text-uppercase">Pravah Organization Placement Opportunities</h5>
                             <h1 class="display-1 text-white mb-md-4">We Provide Solution On Your Career </h1>
                             
@@ -301,7 +323,7 @@ li {
                             placeholder="Search for jobs..."  
                             style="width: 90%; max-width: 600px; height: 50px; padding: 10px; border-radius: 5px; border: 1px solid #ccc; margin-top: 20px; margin-bottom: 20px; font-size: 16px;">
                             <br> -->
-                            <form method="get" action="{% url 'joblist' %}">
+                            <form method="get" action="{% url 'check' %}">
                                 <input 
                                     type="text" 
                                     name="q"
@@ -312,7 +334,7 @@ li {
                             </form>
                             
                             <div class="container my-5">
-                                <h3>Available Jobs</h3>
+                                <!-- <h3>Available Jobs</h3> -->
                                 <ul class="list-group">
                                     {% for job in jobs %}
                                         <li class="list-group-item">
@@ -334,7 +356,7 @@ li {
                                 </ul>
                             </div>
 
-                            <a href="/login" class="btn btn-info py-md-3 px-md-5 me-3 rounded-pill">Login</a>
+                            <a href="/login/" class="btn btn-info py-md-3 px-md-5 me-3 rounded-pill">Login</a>
                             <!-- <a href="{% url 'login' %}" class="btn btn-primary py-md-3 px-md-5 me-3 rounded-pill" onclick="handleLoginClick(event)">Login</a>
 
                             <script>
@@ -352,7 +374,7 @@ li {
                                     window.location.href = "{% url 'login' %}";
                                 }
                             </script> -->
-                            <a href="/contact" class="btn btn-secondary py-md-3 px-md-5 rounded-pill">Contact Us</a>
+                            <a href="/contact/" class="btn btn-secondary py-md-3 px-md-5 rounded-pill">Contact Us</a>
                         </div>
                     </div>
                 </div>
@@ -368,7 +390,7 @@ li {
                             placeholder="Search for jobs..."  
                             style="width: 90%; max-width: 600px; height: 50px; padding: 10px; border-radius: 5px; border: 1px solid #ccc; margin-top: 20px; margin-bottom: 20px; font-size: 16px;">
                             <br> -->
-                            <form method="get" action="{% url 'joblist' %}">
+                             <form method="get" action="{% url 'check' %}">
                                 <input 
                                     type="text" 
                                     name="q"
@@ -379,7 +401,7 @@ li {
                             </form>
                             
                             <div class="container my-5">
-                                <h3>Available Jobs</h3>
+                                <!-- <h3>Available Jobs</h3> -->
                                 <ul class="list-group">
                                     {% for job in jobs %}
                                         <li class="list-group-item">
@@ -426,7 +448,7 @@ li {
                              
 
                             
-                            <a href="/contact" class="btn btn-secondary py-md-3 px-md-5 rounded-pill">Contact Us</a>
+                            <a href="/contact/" class="btn btn-secondary py-md-3 px-md-5 rounded-pill">Contact Us</a>
                         </div>
                     </div>
                 </div>
@@ -453,7 +475,7 @@ li {
                 <h1 class="display-5 mb-4">Welcome To <span class="text-info">Career And Services</span></h1>
                 <h4 class="text-info mb-4">Pravah Organization is a non-profit empowering individuals through career opportunities, bridging education, skill development, and employment for lasting social impact.</h4>
                 <p class="mb-4">Our focus is on supporting youth, underprivileged communities, and diverse individuals in building sustainable careers and brighter futures.To help students financial independence. </p>
-                <a href="/emplogin" class="btn btn-info py-md-3 px-md-5 rounded-pill">Login</a>
+                <a href="/login" class="btn btn-info py-md-3 px-md-5 rounded-pill">Login</a>
             </div>
             <div class="col-lg-6">
                 <div class="h-100 d-flex flex-column justify-content-center bg-info p-5">
@@ -492,12 +514,12 @@ li {
     
 
     <!-- Services Start -->
-    <div class="container-fluid pt-6 px-5">
+    <!-- <div class="container-fluid pt-6 px-5">
         <div class="text-center mx-auto mb-5" style="max-width: 600px;">
             <h1 class="display-5 mb-0">What We Offer</h1>
             <hr class="w-25 mx-auto bg-primary">
         </div>
-        <div class="container">
+        <div class="boxes-container">
             <div class="box">
               <img src="{% static 'img/employee.jpg' %}" alt="" height="200px" width="290px">
               <h3 class="mb-3">For Employers:</h3>
@@ -517,8 +539,51 @@ li {
                 <li><span class="highlight">Resume Building</span> <p class="line">– Professionally crafted resumes.</p></li>
                 <li><span class="highlight">Interview Training</span> <p class="line">– Mock sessions & tips.</p></li>
                 <li><span class="highlight">Career Counselling</span> <p class="line">– Choose the right path.</p></li>
-              </ul>
-            </div>
+              </ul> 
+            </div>-->
+
+            <div class="container-fluid pt-6 px-5 custom-container" style="background-color: rgba(253, 246, 246, 0.884); min-height: 900px; max-height: 1300px;" >
+                <div class="text-center mx-auto mb-5" style="max-width: 600px;">
+                    <h1 class="display-5 mb-0">What We Offer</h1>
+                    <hr class="w-25 mx-auto bg-primary">
+                </div>s
+
+            <div class="container my-5">
+                <div class="row g-4 justify-content-center">
+                  <!-- Employers Panel -->
+                  <div class="col-12 col-md-6">
+                    <div class="border   rounded p-4 h-100" style="border-color:4px solid #1346ec;">
+                      <img src="{% static 'img/employee.jpg' %}"
+                           alt="For Employers"
+                           class="img-fluid rounded mb-3">
+                      <h3 class="mb-3">For Employers:</h3>
+                      <ul class="ps-3" >
+                        <li><strong>Permanent Staffing</strong> – Hire full-time employees.</li>
+                        <li><strong>Contract Hiring</strong> – Project-based recruitment.</li>
+                        <li><strong>Bulk Recruitment</strong> – Campus & mass hiring.</li>
+                        <li><strong>HR Consulting</strong> – Payroll, compliance & training.</li>
+                      </ul>
+                    </div>
+                  </div>
+              
+                  <!-- Job Seekers Panel -->
+                  <div class="col-12 col-md-6">
+                    <div class="border  rounded  p-4 h-100 " style="border-color: 4px solid #1346ec;">
+                      <img src="{% static 'img/jobseeker.jpg' %}"
+                           alt="For Job Seekers"
+                           class="img-fluid rounded mb-3">
+                      <h3 class="mb-3">For Job Seekers:</h3>
+                      <ul class="ps-3">
+                        <li><strong>Free Job Placement</strong> – Register & get matched.</li>
+                        <li><strong>Resume Building</strong> – Professionally crafted resumes.</li>
+                        <li><strong>Interview Training</strong> – Mock sessions & tips.</li>
+                        <li><strong>Career Counselling</strong> – Choose the right path.</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
         <!-- <div class="row g-5">
             <div class="col-lg-4 col-md-6">
                 <div class="service-item bg-secondary text-center px-5">
@@ -576,12 +641,13 @@ li {
             </div>
         
         </div>-->
-    </div>
+    
     <!-- Services End -->
+<br>
 
 
     <!-- Features Start -->
-    <div class="container-fluid py-6 px-5">
+    <div class="container-fluid py-6 px-5" >
         <div class="text-center mx-auto mb-5" style="max-width: 600px;">
             <h1 class="display-5 mb-0">Why Choose Us!!!</h1>
             <hr class="w-25 mx-auto bg-primary">
@@ -657,21 +723,21 @@ li {
             <div class="col-lg-3 col-md-6">
                 <h3 class="text-white mb-4">Quick Links</h3>
                 <div class="d-flex flex-column justify-content-start">
-                    <a class="text-secondary mb-2" href="#"><i class="bi bi-arrow-right text-info me-2"></i>Home</a>
-                    <a class="text-secondary mb-2" href="#"><i class="bi bi-arrow-right text-info me-2"></i>About Us</a>
-                    <a class="text-secondary mb-2" href="#"><i class="bi bi-arrow-right text-info me-2"></i>Our Services</a>
-                    <a class="text-secondary mb-2" href="#"><i class="bi bi-arrow-right text-info me-2"></i>Latest Blog Post</a>
-                    <a class="text-secondary" href="#"><i class="bi bi-arrow-right text-info me-2"></i>Contact Us</a>
+                    <a class="text-secondary mb-2" href="/"><i class="bi bi-arrow-right text-info me-2"></i>Home</a>
+                    <a class="text-secondary mb-2" href="/about/"><i class="bi bi-arrow-right text-info me-2"></i>About Us</a>
+                    <a class="text-secondary mb-2" href="/ourservices/"><i class="bi bi-arrow-right text-info me-2"></i>Our Services</a>
+                    <a class="text-secondary mb-2" href="/features/"><i class="bi bi-arrow-right text-info me-2"></i>Career</a>
+                    <a class="text-secondary" href="/contact/"><i class="bi bi-arrow-right text-info me-2"></i>Contact Us</a>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
                 <h3 class="text-white mb-4">Popular Links</h3>
                 <div class="d-flex flex-column justify-content-start">
-                    <a class="text-secondary mb-2" href="#"><i class="bi bi-arrow-right text-info me-2"></i>Home</a>
-                    <a class="text-secondary mb-2" href="#"><i class="bi bi-arrow-right text-info me-2"></i>About Us</a>
-                    <a class="text-secondary mb-2" href="#"><i class="bi bi-arrow-right text-info me-2"></i>Our Services</a>
-                    <a class="text-secondary mb-2" href="#"><i class="bi bi-arrow-right text-info me-2"></i>Latest Blog Post</a>
-                    <a class="text-secondary" href="#"><i class="bi bi-arrow-right text-info me-2"></i>Contact Us</a>
+                    <a class="text-secondary mb-2" href="/"><i class="bi bi-arrow-right text-info me-2"></i>Home</a>
+                    <a class="text-secondary mb-2" href="/about/"><i class="bi bi-arrow-right text-info me-2"></i>About Us</a>
+                    <a class="text-secondary mb-2" href="/ourservices/"><i class="bi bi-arrow-right text-info me-2"></i>Our Services</a>
+                    <a class="text-secondary mb-2" href="/features/"><i class="bi bi-arrow-right text-info me-2"></i>Career</a>
+                    <a class="text-secondary" href="/contact/"><i class="bi bi-arrow-right text-info me-2"></i>Contact Us</a>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
@@ -692,7 +758,7 @@ li {
         </div>
     </div>
     <div class="container-fluid bg-dark text-secondary text-center border-top py-4 px-5" style="border-color: rgba(256, 256, 256, .1) !important;">
-        <p class="m-0">&copy; <a class="text-secondary border-bottom" href="#">Your Site Name</a>. All Rights Reserved. Designed by <a class="text-secondary border-bottom" href="https://htmlcodex.com">HTML Codex</a></p>
+        <p class="m-0">&copy; <a class="text-secondary border-bottom" href="/">Pravah Organization</a>. All Rights Reserved. Designed by <a class="text-secondary border-bottom" href="https://htmlcodex.com">Pravah Organization</a></p>
     </div>
     <!-- Footer End -->
 

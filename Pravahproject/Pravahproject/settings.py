@@ -143,10 +143,11 @@ STATIC_URL = '/static/'
 # ]
 
 STATICFILES_DIRS = [
-    BASE_DIR / "static" ,  # Check if this directory exists
+    BASE_DIR / 'static' ,  # Check if this directory exists
 ]
 
-
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # AUTH_USER_MODEL = 'pravahapp.User'  # Custom user model
 
 

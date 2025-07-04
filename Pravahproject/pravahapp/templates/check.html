@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pravah Organization</title>
+<style>
+.login-required-message {
+    text-align: center;
+    margin-top: 50px;
+    padding: 20px;
+    background-color: hwb(180 95% 3%);
+    /* border: 1px solid #9a9c9c; */
+    color: #856404;
+    border-radius: 5px;
+}
+.login-required-message .btn {
+    background: #007bff;
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 4px;
+    display: inline-block;
+    margin-top: 10px;
+}
+</style>
+
+</head>
+<body>
+  <div class="container">
+    <!-- Protected Content -->
+    <!-- <h2>Available Job Listings</h2>
+    {% for job in jobs %}
+        <div class="job-card">
+            <h3>{{ job.title }}</h3>
+            <p>{{ job.description|truncatewords:20 }}</p>
+        </div>
+    </div> -->
+    <!-- {% empty %}
+        <p>No job listings available at the moment.</p>
+    {% endfor %} -->
+
+    <!-- Message to login -->
+    <div class="login-required-message">
+        <h3>🔒 Please login to view jobs</h3>
+        <a href="{% url 'login' %}?next={{ request.path }}" class="btn">Login Now</a>
+    </div>
+</div>
+
+    
+
+</body>
+</html>

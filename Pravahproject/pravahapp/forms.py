@@ -1,5 +1,5 @@
 from django import forms
-
+from django.contrib.auth.forms import UserCreationForm
 from .models import EmployeeProfile
 from .models import CandidateProfile
 
@@ -13,9 +13,53 @@ from .models import JobApplication
 
 from .models import CustomUser
 from django.contrib.auth.forms import UserCreationForm
-
+from django.core.validators import RegexValidator, FileExtensionValidator
+from django.utils import timezone
 
 import os
+
+class AdminRegisterForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput)
+    confirm_password = forms.CharField(widget=forms.PasswordInput)
+
+    class Meta:
+        model = CustomUser
+        fields = ('username', 'email','password', 'confirm_password');  
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if username and len(username) < 3:
+            raise ValidationError('Username must be at least 3 characters long.')
+        return username
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password')
+        confirm_password = cleaned_data.get('confirm_password')
+
+        if password != confirm_password:
+            raise forms.ValidationError("Passwords do not match.")
+        if password and len(password) < 8:
+            raise forms.ValidationError("Password must be at least 8 characters long.")
+        return cleaned_data
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data['password'])  # Hashing manually
+        user.is_staff = True
+        user.is_superuser = True
+        user.role = 'admin'  # Make sure 'admin' is a valid choice
+        if commit:
+            user.save()
+        return user
+
+
+
+    
+class AdminLoginForm(forms.Form):
+    username = forms.CharField(label='Username', max_length=150)
+    password = forms.CharField(label='Password', widget=forms.PasswordInput)
+    
 
 class RegistrationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
@@ -59,650 +103,89 @@ class LoginForm(forms.Form):
     password = forms.CharField(label='Password', widget=forms.PasswordInput)
 
 
-
-# class RegistrationForm(forms.ModelForm):
-#     class Meta:
-#         model = CustomUser
-#         fields = ['username', 'email', 'password', 'role']  #
-#         help_texts = {
-#             'username': '',  # This removes the default help text
-#         }# Add any fields you need
-
-#     #If you need additional custom validation or fields:
-#     password = forms.CharField(widget=forms.PasswordInput)
-    
-#     #Custom validation can also be added if needed
-#     #forms.py
-
-# class RegistrationForm(UserCreationForm):
-#     role = forms.ChoiceField(choices=CustomUser.ROLE_CHOICES, required=True)
-
-#     class Meta:
-#         model = CustomUser
-#         fields = ['username','email', 'password1', 'password2', 'role' ,'date_joined', 'registered_at']  
-#         help_texts = {
-#             'username': '',  # This removes the default help text
-#         }# Add any fields you need
-# class RegistrationForm(forms.ModelForm):
-#     confirm_password = forms.CharField(widget=forms.PasswordInput)  # Add confirm_password field
-
-#     class Meta:
-#         model = CustomUser
-#         fields = ['username', 'email', 'role', 'password']
-
-#     password = forms.CharField(widget=forms.PasswordInput)
-
-#     def clean(self):
-#         cleaned_data = super().clean()
-#         password = cleaned_data.get('password')
-#         confirm_password = cleaned_data.get('confirm_password')
-
-#         if password != confirm_password:
-#             raise forms.ValidationError("Passwords do not match.")
-#         return cleaned_data
-
-#     def save(self, commit=True):
-#         user = super().save(commit=False)
-#         user.set_password(self.cleaned_data['password'])  # Set the password
-#         if commit:
-#             user.save()
-#         return user
-
- 
-
-
-# def clean(self):
-#         cleaned_data = super().clean()
-#         password = cleaned_data.get('password')
-#         confirm_password = cleaned_data.get('confirm_password')
-
-#         if password != confirm_password:
-#             raise forms.ValidationError("Passwords do not match.")
-#         return cleaned_data
-
-# def save(self):
-#         # Create the user in the database
-#         username = self.cleaned_data['username']
-#         email = self.cleaned_data['email']
-#         password = self.cleaned_data['password']
-
-#         user = CustomUser.objects.create_user(username=username, email=email, password=password)
-#         return user
-
-
-
-# class CandidateRegistrationForm(forms.Form):
-   
-#     username = forms.CharField(max_length=100)
-#     email = forms.EmailField()
-#     password = forms.CharField(widget=forms.PasswordInput())
-#     confirm_password = forms.CharField(widget=forms.PasswordInput())
-
-#     def clean(self):
-#          cleaned_data = super().clean()
-#          password = cleaned_data.get('password')
-#          confirm_password = cleaned_data.get('confirm_password')
-
-#          if password != confirm_password:
-#             raise forms.ValidationError("Passwords do not match.")
-#          return cleaned_data
-
-#     def save(self):
-        
-#          username = self.cleaned_data['username']
-#          email = self.cleaned_data['email']
-#          password = self.cleaned_data['password']
-
-#          user = User.objects.create_user(username=username, email=email, password=password)
-#          return user
-
-
 class EmployeeForm(forms.ModelForm):
+    name = forms.CharField(
+        max_length=100, 
+        widget=forms.TextInput(attrs={'placeholder': 'Enter your name'}),
+        validators=[RegexValidator(
+            regex=r'^[\w\s-]+$',
+            message='Name can only contain letters, spaces, and hyphens.',
+            code='invalid_name'
+        )]
+    )
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={'placeholder': 'Enter your email'}), 
+        validators=[RegexValidator(
+            regex=r'^[\w\.-]+@[\w\.-]+\.\w+$',
+            message='Enter a valid email address.',
+            code='invalid_email'
+        )]
+    )
+    company_name = forms.CharField( 
+        max_length=100,
+        widget=forms.TextInput(attrs={'placeholder': 'Enter your company name'}),       
+        validators=[RegexValidator(
+            regex=r'^[\w\s-]+$',
+            message='Company name can only contain letters, digits, spaces, and hyphens.',
+            code='invalid_company_name'
+        )]  
+    )
+    designation = forms.CharField(
+        max_length=100,     
+        widget=forms.TextInput(attrs={'placeholder': 'Enter your designation'}),
+        validators=[RegexValidator(
+            regex=r'^[\w\s-]+$',
+            message='Designation can only contain letters, spaces, and hyphens.',
+            code='invalid_designation'
+        )]  
+
+    )
+
+    location = forms.CharField(
+        max_length=100,     
+        widget=forms.TextInput(attrs={'placeholder': 'Enter your location'}),
+        validators=[RegexValidator( 
+            regex=r'^[\w\s-]+$',
+            message='Location can only contain letters, spaces, and hyphens.',
+            code='invalid_location'
+        )]
+    )
+
+    sector = forms.CharField(
+        max_length=100,     
+        widget=forms.TextInput(attrs={'placeholder': 'Enter your sector'}),     
+        validators=[RegexValidator(
+            regex=r'^[\w\s-]+$',
+            message='Sector can only contain letters, spaces, and hyphens.',
+            code='invalid_sector'
+        )]
+    )
+        
+
+    phoneNo = forms.CharField(
+        max_length=10,
+        validators=[RegexValidator(r'^\+?1?\d{10}$', 'Enter a valid phone number.')],
+    )
+     
+
     class Meta:
         model = EmployeeProfile
-        fields = ['name', 'email','phoneNo','company_name','designation' ,'location', 'sector', 'companywebsite']
+        fields = ['name', 'email','phoneNo','company_name','designation' ,'location', 'sector', 'company_website']
         
     
 class CandidateForm(forms.ModelForm):
+    gender = forms.ChoiceField(choices=CandidateProfile.GENDER_CHOICES,  widget=forms.RadioSelect,required=True)
     class Meta:
         model = CandidateProfile
         fields = ['name', 'email','contact','dob','age','gender','village', 'taluka', 'district', 'city', 'state', 'country', 'postal_code']  # Add fields you want to customize
           
-        
+       
         widgets = {
-            'gender': forms.RadioSelect(attrs={'class':'gender-radio'}),  # Custom class for radio buttons
+            
               # Radio buttons for gender
             'dob': forms.DateInput(attrs={'type': 'date'}),  # Date picker for date of birth
 
         }
-
-# class EducationForm(forms.ModelForm):
-#     class Meta:
-#         model = Education
-#         fields = ['degree', 'institution', 'year_of_passing', 'percentage', 'skills', 'experience', 'interestedsector', 'specialization', 'college']
-
-#     # RadioButton choices for percentage
-#     PERCENTAGE_CHOICES = [
-#          ('Percentage', 'Percentage'),
-#          ('CGPA', 'CGPA')
-#     ]
-
-#     percentage_type = forms.ChoiceField(choices=PERCENTAGE_CHOICES, widget=forms.Select(), label="Enter as", initial='Percentage')
-
-#     def clean_percentage(self):
-#         percentage_type = self.cleaned_data.get('percentage_type')
-#         percentage_value = self.cleaned_data.get('percentage')
-
-#         if percentage_type == 'Percentage':
-#             if not (0 <= percentage_value <= 100):
-#                 raise forms.ValidationError("Please enter a valid percentage between 0 and 100.")
-#         elif percentage_type == 'CGPA':
-#             if not (0 <= percentage_value <= 10):
-#                 raise forms.ValidationError("Please enter a valid CGPA between 0 and 10.")
-#         return percentage_value
-
-#     # RadioButton choices for degree (with mandatory logic)
-#     DEGREE_CHOICES = [
-#         ('10th', '10th'),
-#         ('12th', '12th'),
-#         ('Degree', 'Degree')
-#     ]
-
-#     degree = forms.ChoiceField(choices=DEGREE_CHOICES, widget=forms.RadioSelect(), label="Degree Level")
-
-#     # Custom validation for degree choice
-#     def clean_degree(self):
-#         degree = self.cleaned_data.get('degree')
-#         if degree not in ['10th', '12th', 'Degree']:
-#             raise forms.ValidationError("Please select a valid degree: 10th, 12th, or Degree.")
-#         return degree
-#     # RadioButton choices for skill type (Technical or Non-Technical)
-#     SKILL_TYPE_CHOICES = [
-#         ('technical', 'Technical'),
-#         ('non_technical', 'Non-Technical')
-#     ]
-
-#     skill_type = forms.ChoiceField(choices=SKILL_TYPE_CHOICES, widget=forms.RadioSelect(), label="Choose Skill Category")
-
-#     # Technical and Non-Technical Skills
-#     technical_skills = forms.MultipleChoiceField(
-#         widget=forms.CheckboxSelectMultiple,
-#         choices=[
-#             ('Python', 'Python'),
-#             ('JavaScript', 'JavaScript'),
-#             ('C++', 'C++'),
-#             ('SQL', 'SQL'),
-#             ('Java', 'Java'),
-#             ('Django', 'Django'),
-#             ('Ruby', 'Ruby'),
-#             ('Go', 'Go'),
-#             ('C#', 'C#'),
-#             ('PHP', 'PHP'),
-#             ('Swift', 'Swift'),
-#             ('Kotlin', 'Kotlin'),
-#             ('React', 'React'),
-#             ('Angular', 'Angular'),
-#             ('Node.js', 'Node.js'),
-#             ('Vue.js', 'Vue.js'),
-#             ('Docker', 'Docker'),
-#             ('AWS', 'AWS'),
-#             ('Azure', 'Azure'),
-#             ('Git', 'Git'),
-#             ('Linux', 'Linux'),
-#             ('Machine Learning', 'Machine Learning'),
-#             ('TensorFlow', 'TensorFlow'),
-#             ('Deep Learning', 'Deep Learning'),
-#             ('Data Science', 'Data Science'),
-#             ('Others', 'Others')
-#         ],
-#         label="Technical Skills",
-#         required=False
-#     )
-
-#     non_technical_skills = forms.MultipleChoiceField(
-#         widget=forms.CheckboxSelectMultiple,
-#         choices=[
-#             ('Communication', 'Communication'),
-#             ('Leadership', 'Leadership'),
-#             ('Problem Solving', 'Problem Solving'),
-#             ('Time Management', 'Time Management'),
-#             ('Project Management', 'Project Management'),
-#             ('Teamwork', 'Teamwork'),
-#             ('Creativity', 'Creativity'),
-#             ('Critical Thinking', 'Critical Thinking'),
-#             ('Negotiation', 'Negotiation'),
-#             ('Adaptability', 'Adaptability'),
-#             ('Conflict Resolution', 'Conflict Resolution'),
-#             ('Decision Making', 'Decision Making'),
-#             ('Networking', 'Networking'),
-#             ('Empathy', 'Empathy'),
-#             ('Collaboration', 'Collaboration'),
-#             ('Mentoring', 'Mentoring'),
-#             ('Public Speaking', 'Public Speaking'),
-#             ('Presentation Skills', 'Presentation Skills'),
-#             ('Organizational Skills', 'Organizational Skills'),
-#             ('Customer Service', 'Customer Service'),
-#             ('Analytical Thinking', 'Analytical Thinking'),
-#             ('Research', 'Research'),
-#             ('Strategic Planning', 'Strategic Planning'),
-#             ('Budgeting', 'Budgeting'),
-#             ('Risk Management', 'Risk Management'),
-#             ('Sales and Marketing', 'Sales and Marketing'),
-#             ('Time Management', 'Time Management'),
-#             ('Others', 'Others')
-#         ],
-#         label="Non-Technical Skills",
-#         required=False
-#     )
-
-#     # Checkboxes for interested sectors
-#     interestedsector = forms.MultipleChoiceField(
-#         widget=forms.CheckboxSelectMultiple,
-#         choices=[
-#             ('Tech', 'Tech'),
-#             ('Finance', 'Finance'),
-#             ('Healthcare', 'Healthcare'),
-#             ('Education', 'Education'),
-#             ('Marketing', 'Marketing'),
-#             ('Retail', 'Retail'),
-#             ('Manufacturing', 'Manufacturing'),
-#             ('Hospitality', 'Hospitality'),
-#             ('Real Estate', 'Real Estate'),
-#             ('Transportation', 'Transportation'),
-#             ('Telecommunications', 'Telecommunications'),
-#             ('Energy', 'Energy'),
-#             ('Government', 'Government'),
-#             ('Non-Profit', 'Non-Profit'),
-#             ('Entertainment', 'Entertainment'),
-#             ('Media', 'Media'),
-#             ('Legal', 'Legal'),
-#             ('Consulting', 'Consulting'),
-#             ('Others', 'Others')
-            
-             
-#         ],
-#         label="Interested Sectors"
-#     )
-
-
-# class EducationForm(forms.ModelForm):
-#     class Meta:
-#         model = Education
-#         fields = ['degree', 'institution', 'year_of_passing', 'percentage', 'skills', 'experience', 'interestedsector', 'specialization', 'college']
-
-#     # RadioButton choices for percentage
-#     PERCENTAGE_CHOICES = [
-#          ('Percentage', 'Percentage'),
-#          ('CGPA', 'CGPA')
-#     ]
-
-#     percentage_type = forms.ChoiceField(
-#         choices=PERCENTAGE_CHOICES, 
-#         widget=forms.Select(), 
-#         label="Enter as", 
-#         initial='Percentage'
-#     )
-
-#     def clean_percentage(self):
-#         percentage_type = self.cleaned_data.get('percentage_type')
-#         percentage_value = self.cleaned_data.get('percentage')
-
-#         if percentage_value is None:
-#             raise forms.ValidationError("This field is required.")
-
-#         if percentage_type == 'Percentage':
-#             if not (0 <= percentage_value <= 100):
-#                 raise forms.ValidationError("Please enter a valid percentage between 0 and 100.")
-#         elif percentage_type == 'CGPA':
-#             if not (0 <= percentage_value <= 10):
-#                 raise forms.ValidationError("Please enter a valid CGPA between 0 and 10.")
-#         return percentage_value
-
-#     # RadioButton choices for degree (with mandatory logic)
-#     DEGREE_CHOICES = [
-#         ('10th', '10th'),
-#         ('12th', '12th'),
-#         ('Degree', 'Degree')
-#     ]
-
-#     degree = forms.ChoiceField(
-#         choices=DEGREE_CHOICES, 
-#         widget=forms.RadioSelect(), 
-#         label="Degree Level"
-#     )
-
-#     # Custom validation for degree choice
-#     def clean_degree(self):
-#         degree = self.cleaned_data.get('degree')
-#         if degree not in ['10th', '12th', 'Degree']:
-#             raise forms.ValidationError("Please select a valid degree: 10th, 12th, or Degree.")
-#         return degree
-
-#     # Skill Type: Technical or Non-Technical
-#     SKILL_TYPE_CHOICES = [
-#         ('technical', 'Technical'),
-#         ('non_technical', 'Non-Technical')
-#     ]
-
-#     skill_type = forms.ChoiceField(
-#         choices=SKILL_TYPE_CHOICES, 
-#         widget=forms.RadioSelect(), 
-#         label="Choose Skill Category"
-#     )
-
-#     # Dynamically show relevant skills based on skill type
-#     technical_skills = forms.MultipleChoiceField(
-#         widget=forms.CheckboxSelectMultiple,
-#         choices=[
-#             ('Python', 'Python'),
-#             ('JavaScript', 'JavaScript'),
-#             ('C++', 'C++'),
-#             ('SQL', 'SQL'),
-#             ('Java', 'Java'),
-#             ('Django', 'Django'),
-#             ('Ruby', 'Ruby'),
-#             ('Go', 'Go'),
-#             ('C#', 'C#'),
-#             ('PHP', 'PHP'),
-#             ('Swift', 'Swift'),
-#             ('Kotlin', 'Kotlin'),
-#             ('React', 'React'),
-#             ('Angular', 'Angular'),
-#             ('Node.js', 'Node.js'),
-#             ('Vue.js', 'Vue.js'),
-#             ('Docker', 'Docker'),
-#             ('AWS', 'AWS'),
-#             ('Azure', 'Azure'),
-#             ('Git', 'Git'),
-#             ('Linux', 'Linux'),
-#             ('Machine Learning', 'Machine Learning'),
-#             ('TensorFlow', 'TensorFlow'),
-#             ('Deep Learning', 'Deep Learning'),
-#             ('Data Science', 'Data Science'),
-#             ('Others', 'Others')
-#         ],
-#         label="Technical Skills",
-#         required=False
-#     )
-
-#     non_technical_skills = forms.MultipleChoiceField(
-#         widget=forms.CheckboxSelectMultiple,
-#         choices=[
-#             ('Communication', 'Communication'),
-#             ('Leadership', 'Leadership'),
-#             ('Problem Solving', 'Problem Solving'),
-#             ('Time Management', 'Time Management'),
-#             ('Project Management', 'Project Management'),
-#             ('Teamwork', 'Teamwork'),
-#             ('Creativity', 'Creativity'),
-#             ('Critical Thinking', 'Critical Thinking'),
-#             ('Negotiation', 'Negotiation'),
-#             ('Adaptability', 'Adaptability'),
-#             ('Conflict Resolution', 'Conflict Resolution'),
-#             ('Decision Making', 'Decision Making'),
-#             ('Networking', 'Networking'),
-#             ('Empathy', 'Empathy'),
-#             ('Collaboration', 'Collaboration'),
-#             ('Mentoring', 'Mentoring'),
-#             ('Public Speaking', 'Public Speaking'),
-#             ('Presentation Skills', 'Presentation Skills'),
-#             ('Organizational Skills', 'Organizational Skills'),
-#             ('Customer Service', 'Customer Service'),
-#             ('Analytical Thinking', 'Analytical Thinking'),
-#             ('Research', 'Research'),
-#             ('Strategic Planning', 'Strategic Planning'),
-#             ('Budgeting', 'Budgeting'),
-#             ('Risk Management', 'Risk Management'),
-#             ('Sales and Marketing', 'Sales and Marketing'),
-#             ('Time Management', 'Time Management'),
-#             ('Others', 'Others')
-#         ],
-#         label="Non-Technical Skills",
-#         required=False
-#     )
-
-#     # Checkboxes for interested sectors
-#     interestedsector = forms.MultipleChoiceField(
-#         widget=forms.CheckboxSelectMultiple,
-#         choices=[
-#             ('Tech', 'Tech'),
-#             ('Finance', 'Finance'),
-#             ('Healthcare', 'Healthcare'),
-#             ('Education', 'Education'),
-#             ('Marketing', 'Marketing'),
-#             ('Retail', 'Retail'),
-#             ('Manufacturing', 'Manufacturing'),
-#             ('Hospitality', 'Hospitality'),
-#             ('Real Estate', 'Real Estate'),
-#             ('Transportation', 'Transportation'),
-#             ('Telecommunications', 'Telecommunications'),
-#             ('Energy', 'Energy'),
-#             ('Government', 'Government'),
-#             ('Non-Profit', 'Non-Profit'),
-#             ('Entertainment', 'Entertainment'),
-#             ('Media', 'Media'),
-#             ('Legal', 'Legal'),
-#             ('Consulting', 'Consulting'),
-#             ('Others', 'Others')
-#         ],
-#         label="Interested Sectors"
-#     )
-
-#     def clean(self):
-#         cleaned_data = super().clean()
-
-#         # Dynamically validate skills based on selected category
-#         skill_type = cleaned_data.get('skill_type')
-
-#         if skill_type == 'technical':
-#             cleaned_data['skills'] = cleaned_data.get('technical_skills', [])
-#         elif skill_type == 'non_technical':
-#             cleaned_data['skills'] = cleaned_data.get('non_technical_skills', [])
-        
-#         return cleaned_data
-
-# from django import forms
-
-# class EducationForm(forms.ModelForm):
-#     class Meta:
-#         model = Education
-#         fields = ['degree', 'institution', 'year_of_passing', 'percentage', 'skills', 'experience', 'interestedsector', 'specialization', 'college']
-
-#     # RadioButton choices for percentage
-#     PERCENTAGE_CHOICES = [
-#         ('Percentage', 'Percentage'),
-#         ('CGPA', 'CGPA')
-#     ]
-
-#     percentage_type = forms.ChoiceField(
-#         choices=PERCENTAGE_CHOICES, 
-#         widget=forms.Select(), 
-#         label="Enter Percentage as", 
-#         initial='Percentage',
-#         help_text="Choose whether your percentage is in Percentage or CGPA format."
-#     )
-
-#     def clean_percentage(self):
-#         percentage_type = self.cleaned_data.get('percentage_type')
-#         percentage_value = self.cleaned_data.get('percentage')
-
-#         if percentage_value is None:
-#             raise forms.ValidationError("This field is required.")
-
-#         # Validate based on selected percentage type
-#         if percentage_type == 'Percentage':
-#             if not (0 <= percentage_value <= 100):
-#                 raise forms.ValidationError("Please enter a valid percentage between 0 and 100.")
-#         elif percentage_type == 'CGPA':
-#             if not (0 <= percentage_value <= 10):
-#                 raise forms.ValidationError("Please enter a valid CGPA between 0 and 10.")
-#         return percentage_value
-
-#     # RadioButton choices for degree (with mandatory logic)
-#     DEGREE_CHOICES = [
-#         ('10th', '10th Grade'),
-#         ('12th', '12th Grade'),
-#         ('Undergraduate', 'Undergraduate Degree'),
-#         ('Postgraduate', 'Postgraduate Degree')
-#     ]
-
-#     degree = forms.ChoiceField(
-#         choices=DEGREE_CHOICES, 
-#         widget=forms.RadioSelect(), 
-#         label="Highest Degree Level",
-#         help_text="Please select your highest level of education."
-#     )
-
-#     def clean_degree(self):
-#         degree = self.cleaned_data.get('degree')
-#         if degree not in ['10th', '12th', 'Undergraduate', 'Postgraduate']:
-#             raise forms.ValidationError("Please select a valid degree: 10th, 12th, Undergraduate, or Postgraduate.")
-#         return degree
-
-#     # Skill Category Choices: Technical or Non-Technical
-#     SKILL_TYPE_CHOICES = [
-#         ('technical', 'Technical'),
-#         ('non_technical', 'Non-Technical')
-#     ]
-
-#     skill_type = forms.ChoiceField(
-#         choices=SKILL_TYPE_CHOICES, 
-#         widget=forms.RadioSelect(), 
-#         label="Choose Skill Category",
-#         help_text="Choose between technical or non-technical skills."
-#     )
-
-#     # Technical Skills (if skill type is 'technical')
-#     technical_skills = forms.MultipleChoiceField(
-#         widget=forms.CheckboxSelectMultiple,
-#         choices=[
-#             ('Python', 'Python'),
-#             ('JavaScript', 'JavaScript'),
-#             ('C++', 'C++'),
-#             ('SQL', 'SQL'),
-#             ('Java', 'Java'),
-#             ('Django', 'Django'),
-#             ('Ruby', 'Ruby'),
-#             ('Go', 'Go'),
-#             ('C#', 'C#'),
-#             ('PHP', 'PHP'),
-#             ('Swift', 'Swift'),
-#             ('Kotlin', 'Kotlin'),
-#             ('React', 'React'),
-#             ('Angular', 'Angular'),
-#             ('Node.js', 'Node.js'),
-#             ('Vue.js', 'Vue.js'),
-#             ('Docker', 'Docker'),
-#             ('AWS', 'AWS'),
-#             ('Azure', 'Azure'),
-#             ('Git', 'Git'),
-#             ('Linux', 'Linux'),
-#             ('Machine Learning', 'Machine Learning'),
-#             ('TensorFlow', 'TensorFlow'),
-#             ('Deep Learning', 'Deep Learning'),
-#             ('Data Science', 'Data Science'),
-#             ('Others', 'Others')
-#         ],
-#         label="Technical Skills",
-#         required=False,
-#         help_text="Select any technical skills you possess."
-#     )
-
-#     # Non-Technical Skills (if skill type is 'non_technical')
-#     non_technical_skills = forms.MultipleChoiceField(
-#         widget=forms.CheckboxSelectMultiple,
-#         choices=[
-#             ('Communication', 'Communication'),
-#             ('Leadership', 'Leadership'),
-#             ('Problem Solving', 'Problem Solving'),
-#             ('Time Management', 'Time Management'),
-#             ('Project Management', 'Project Management'),
-#             ('Teamwork', 'Teamwork'),
-#             ('Creativity', 'Creativity'),
-#             ('Critical Thinking', 'Critical Thinking'),
-#             ('Negotiation', 'Negotiation'),
-#             ('Adaptability', 'Adaptability'),
-#             ('Conflict Resolution', 'Conflict Resolution'),
-#             ('Decision Making', 'Decision Making'),
-#             ('Networking', 'Networking'),
-#             ('Empathy', 'Empathy'),
-#             ('Collaboration', 'Collaboration'),
-#             ('Mentoring', 'Mentoring'),
-#             ('Public Speaking', 'Public Speaking'),
-#             ('Presentation Skills', 'Presentation Skills'),
-#             ('Organizational Skills', 'Organizational Skills'),
-#             ('Customer Service', 'Customer Service'),
-#             ('Analytical Thinking', 'Analytical Thinking'),
-#             ('Research', 'Research'),
-#             ('Strategic Planning', 'Strategic Planning'),
-#             ('Budgeting', 'Budgeting'),
-#             ('Risk Management', 'Risk Management'),
-#             ('Sales and Marketing', 'Sales and Marketing'),
-#             ('Others', 'Others')
-#         ],
-#         label="Non-Technical Skills",
-#         required=False,
-#         help_text="Select any non-technical skills you possess."
-#     )
-
-#     # Interested Sectors (checkboxes for multiple selections)
-#     interestedsector = forms.MultipleChoiceField(
-#         widget=forms.CheckboxSelectMultiple,
-#         choices=[
-#             ('Tech', 'Tech'),
-#             ('Finance', 'Finance'),
-#             ('Healthcare', 'Healthcare'),
-#             ('Education', 'Education'),
-#             ('Marketing', 'Marketing'),
-#             ('Retail', 'Retail'),
-#             ('Manufacturing', 'Manufacturing'),
-#             ('Hospitality', 'Hospitality'),
-#             ('Real Estate', 'Real Estate'),
-#             ('Transportation', 'Transportation'),
-#             ('Telecommunications', 'Telecommunications'),
-#             ('Energy', 'Energy'),
-#             ('Government', 'Government'),
-#             ('Non-Profit', 'Non-Profit'),
-#             ('Entertainment', 'Entertainment'),
-#             ('Media', 'Media'),
-#             ('Legal', 'Legal'),
-#             ('Consulting', 'Consulting'),
-#             ('Others', 'Others')
-#         ],
-#         label="Interested Sectors",
-#         help_text="Select the sectors you are interested in working with."
-#     )
-
-#     # Specialization / College Details (Optional)
-#     specialization = forms.CharField(
-#         max_length=100,
-#         required=False,
-#         label="Specialization (if any)",
-#         widget=forms.TextInput(attrs={'placeholder': 'E.g., Computer Science, Finance, etc.'}),
-#         help_text="Mention your specialization or area of focus (if applicable)."
-#     )
-
-#     college = forms.CharField(
-#         max_length=100,
-#         required=False,
-#         label="College/University",
-#         widget=forms.TextInput(attrs={'placeholder': 'Name of your College/University'}),
-#         help_text="Enter the name of the college or university you attended."
-#     )
-
-#     # Custom form clean method to handle dynamic skills based on skill type selection
-#     def clean(self):
-#         cleaned_data = super().clean()
-
-#         # Dynamically select the skills based on the selected skill category
-#         skill_type = cleaned_data.get('skill_type')
-
-#         if skill_type == 'technical':
-#             cleaned_data['skills'] = cleaned_data.get('technical_skills', [])
-#         elif skill_type == 'non_technical':
-#             cleaned_data['skills'] = cleaned_data.get('non_technical_skills', [])
-        
-#         return cleaned_data
 
 
 
@@ -711,7 +194,7 @@ class CandidateForm(forms.ModelForm):
 class EducationForm(forms.ModelForm):
     class Meta:
         model = Education
-        fields = ['degree', 'college','coursename','specialization' ,'institution', 'year_of_passing', 'percentage_type','percentage',  'skills', 'experience', 'interestedsector']
+        fields = ['degree', 'college','course_name','specialization' ,'institution', 'year_of_passing', 'percentage_type','percentage',  'skills', 'experience', 'interested_sector']
 
     # RadioButton choices for percentage type
     PERCENTAGE_CHOICES = [
@@ -883,131 +366,6 @@ class EducationForm(forms.ModelForm):
         # help_text="Select the sectors you are interested in working with."
     )
 
-#    # Skill Category Choices: Technical or Non-Technical
-#     SKILL_TYPE_CHOICES = [
-#         ('technical', 'Technical'),
-#         ('non_technical', 'Non-Technical')
-#     ]
-
-#     skill_type = forms.ChoiceField(
-#         choices=SKILL_TYPE_CHOICES, 
-#         widget=forms.Select(),  # Dropdown for skill category
-#         label="Choose Skill Category",
-#         help_text="Choose between technical or non-technical skills."
-#     )
-
-#     # Interested Sectors (Dropdown with Checkboxes)
-#     INTERESTED_SECTORS_CHOICES = [
-#         ('Tech', 'Tech'),
-#         ('Finance', 'Finance'),
-#         ('Healthcare', 'Healthcare'),
-#         ('Education', 'Education'),
-#         ('Marketing', 'Marketing'),
-#         ('Retail', 'Retail'),
-#         ('Manufacturing', 'Manufacturing'),
-#         ('Hospitality', 'Hospitality'),
-#         ('Real Estate', 'Real Estate'),
-#         ('Transportation', 'Transportation'),
-#         ('Telecommunications', 'Telecommunications'),
-#         ('Energy', 'Energy'),
-#         ('Government', 'Government'),
-#         ('Non-Profit', 'Non-Profit'),
-#         ('Entertainment', 'Entertainment'),
-#         ('Media', 'Media'),
-#         ('Legal', 'Legal'),
-#         ('Consulting', 'Consulting'),
-#         ('Others', 'Others')
-#     ]
-
-#     interestedsector = forms.MultipleChoiceField(
-#         choices=INTERESTED_SECTORS_CHOICES,
-#         widget=forms.SelectMultiple(attrs={
-#             'class': 'dropdown-checkboxes',
-#         }),
-#         label="Interested Sectors",
-#         help_text="Select the sectors you are interested in working with."
-#     )
-
-#     # Technical Skills (Dropdown with Checkboxes)
-#     TECHNICAL_SKILLS_CHOICES = [
-#         ('Python', 'Python'),
-#         ('JavaScript', 'JavaScript'),
-#         ('C++', 'C++'),
-#         ('SQL', 'SQL'),
-#         ('Java', 'Java'),
-#         ('Django', 'Django'),
-#         ('Ruby', 'Ruby'),
-#         ('Go', 'Go'),
-#         ('C#', 'C#'),
-#         ('PHP', 'PHP'),
-#         ('Swift', 'Swift'),
-#         ('Kotlin', 'Kotlin'),
-#         ('React', 'React'),
-#         ('Angular', 'Angular'),
-#         ('Node.js', 'Node.js'),
-#         ('Vue.js', 'Vue.js'),
-#         ('Docker', 'Docker'),
-#         ('AWS', 'AWS'),
-#         ('Azure', 'Azure'),
-#         ('Git', 'Git'),
-#         ('Linux', 'Linux'),
-#         ('Machine Learning', 'Machine Learning'),
-#         ('TensorFlow', 'TensorFlow'),
-#         ('Deep Learning', 'Deep Learning'),
-#         ('Data Science', 'Data Science'),
-#         ('Others', 'Others')
-#     ]
-
-#     technical_skills = forms.MultipleChoiceField(
-#         choices=TECHNICAL_SKILLS_CHOICES,
-#         widget=forms.SelectMultiple(attrs={
-#             'class': 'dropdown-checkboxes',
-#         }),
-#         label="Technical Skills",
-#         required=False,
-#         help_text="Select any technical skills you possess."
-#     )
-
-#     # Non-Technical Skills (Dropdown with Checkboxes)
-#     NON_TECHNICAL_SKILLS_CHOICES = [
-#         ('Communication', 'Communication'),
-#         ('Leadership', 'Leadership'),
-#         ('Problem Solving', 'Problem Solving'),
-#         ('Time Management', 'Time Management'),
-#         ('Project Management', 'Project Management'),
-#         ('Teamwork', 'Teamwork'),
-#         ('Creativity', 'Creativity'),
-#         ('Critical Thinking', 'Critical Thinking'),
-#         ('Negotiation', 'Negotiation'),
-#         ('Adaptability', 'Adaptability'),
-#         ('Conflict Resolution', 'Conflict Resolution'),
-#         ('Decision Making', 'Decision Making'),
-#         ('Networking', 'Networking'),
-#         ('Empathy', 'Empathy'),
-#         ('Collaboration', 'Collaboration'),
-#         ('Mentoring', 'Mentoring'),
-#         ('Public Speaking', 'Public Speaking'),
-#         ('Presentation Skills', 'Presentation Skills'),
-#         ('Organizational Skills', 'Organizational Skills'),
-#         ('Customer Service', 'Customer Service'),
-#         ('Analytical Thinking', 'Analytical Thinking'),
-#         ('Research', 'Research'),
-#         ('Strategic Planning', 'Strategic Planning'),
-#         ('Budgeting', 'Budgeting'),
-#         ('Risk Management', 'Risk Management'),
-#         ('Sales and Marketing', 'Sales and Marketing'),
-#         ('Others', 'Others')
-#     ]
-
-#     non_technical_skills = forms.MultipleChoiceField(
-#         choices=NON_TECHNICAL_SKILLS_CHOICES,
-#         widget=forms.SelectMultiple(attrs={
-#             'class': 'dropdown-checkboxes',
-#         }),
-#         label="Non-Technical Skills",
-#         required=False,
-#         # help_text="Select any non-technical skills you possess."
-#     )
 
     # Specialization / College Details (Optional)
     specialization = forms.CharField(
@@ -1015,7 +373,12 @@ class EducationForm(forms.ModelForm):
         required=False,
         label="Specialization (if any)",
         widget=forms.TextInput(attrs={'placeholder': 'E.g., Computer Science, Finance, etc.'}),
-        # help_text="Mention your specialization or area of focus (if applicable)."
+        validators=[RegexValidator(
+            regex=r'^[\w\s-]+$',
+            message='Specialization can only contain letters, spaces, and hyphens.',
+            code='invalid_specialization'
+        )],
+        
     )
 
     college = forms.CharField(
@@ -1023,7 +386,7 @@ class EducationForm(forms.ModelForm):
         required=False,
         label="College/University",
         widget=forms.TextInput(attrs={'placeholder': 'Name of your College/University'}),
-        # help_text="Enter the name of the college or university you attended."
+        help_text="Enter the name of the college or university you attended."
     )
 
     # Custom form clean method to handle dynamic skills based on skill type selection
@@ -1055,67 +418,166 @@ class SubmitCVForm(forms.ModelForm):
 
 
 class JobPostingForm(forms.ModelForm):
+    job_title = forms.CharField(
+        max_length=200,     
+        widget=forms.TextInput(attrs={  
+            'class': 'form-control',
+            'placeholder': 'Enter job title',
+        }), 
+        validators=[RegexValidator(
+            regex=r'^[\w\s-]+$',
+            message='Job title can only contain letters, spaces, and hyphens.',
+            code='invalid_job_title'
+        )]
+
+    )   
+
+    company_name = forms.CharField(
+        max_length=200,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter company name',
+        }),     
+        validators=[RegexValidator( 
+            regex=r'^[\w\s-]+$',
+            message='Company name can only contain letters, digits, spaces, and hyphens.',
+            code='invalid_company_name'
+        )] 
+    )
+
+
     class Meta:
-      model = JobPostings  
+      model = JobPostings 
+      exclude = ['posted_by']  
 
       fields = ['job_title', 'company_name', 'job_location', 'job_description', 'salary', 'employment_type', 'application_deadline']
 
-      application_deadline=forms.DateField(
-           
-        widget=forms.DateInput(attrs={
-              
-            'type':'date'
-              
-              
-        }, 
-        format='%Y-%m-%d'),
-        required=False
-    )
+      widgets = {
+            'job_description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'style': 'width:100%; min-height:150px; resize:vertical;',
+            }),
+            'salary': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter salary in INR',
+            }),
 
+            'job_location': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter job location',
+            }),
+
+            'job_title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter job title',
+            }),
+            'company_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter company name',
+            }),
+
+            'employment_type': forms.Select(attrs={
+                'class': 'form-control',
+                'placeholder': 'Select employment type',
+            }),
+            
+             
+
+
+        }
+
+    
+
+
+  
+
+
+    application_deadline = forms.DateField(
+       widget=forms.DateInput(attrs={
+        'type': 'date',
+        'placeholder': 'YYYY-MM-DD'  # or 'Select deadline'
+    }, format='%Y-%m-%d'),
+    required=False,
+    input_formats=['%Y-%m-%d']
+)
+    
+    def clean_application_deadline(self):
+        date = self.cleaned_data.get('application_deadline')
+        if date:
+            if date < timezone.now().date():
+                raise forms.ValidationError("Application deadline cannot be in the past.")
+        return date
        
            
-# class JobInquiryForm(forms.ModelForm):
-#     class Meta:
-#       model = JobInquiry
-#       fields = ['full_name', 'email', 'phone_number', 'role', 'message', 'resume']
-#       widgets = {
-#             'phone_number': forms.TextInput(attrs={'placeholder': 'Your phone number', 'pattern': r'\d{10}'}),
-#             'message': forms.Textarea(attrs={'placeholder': 'Type your message here...'}),
-#             'resume': forms.ClearableFileInput(attrs={'accept': 'application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document'})
-#         }
-# def clean_phone_number(self):
-#         phone_number = self.cleaned_data.get('phone_number')
-#         if len(phone_number) != 10:  # Check for exactly 10 digits
-#             raise ValidationError("Phone number must be 10 digits.")
-#         return phone_number
-
-# def clean_resume(self):
-#         resume = self.cleaned_data.get('resume')
-#         if resume:
-#             # File size validation (e.g., 5 MB max)
-#             max_size = 5 * 1024 * 1024  # 5 MB
-#             if resume.size > max_size:
-#                 raise ValidationError("Resume file size must be less than 5MB.")
-#         return resume
 
 
 class ContactForm(forms.ModelForm):
-    class Meta:
-      model = Contact
-      fields =['full_name', 'email','subject','message']
+    full_name = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(attrs={'placeholder': 'Your Full Name'}),
+        label="Full Name",
+        validators=[
+        RegexValidator(
+            regex=r'^[A-Za-z ]+$',
+            message='Only alphabets and spaces are allowed.',
+            code='invalid_fullname'
+            )
+        ]
+    )
+ 
 
-      message = forms.CharField(
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={'placeholder': 'Your Email Address'})
+    )
+
+    subject = forms.CharField(
+        max_length=150,
+        widget=forms.TextInput(attrs={'placeholder': 'Subject of your message'})
+    )
+
+    message = forms.CharField(
         widget=forms.Textarea(attrs={
-            'class': 'form-control',
+            'maxlength': 800,
             'placeholder': 'Your message',
-            'style': 'height: 150px'
+            'style': 'height: 150px',
+            'class': 'form-control'
         }),
         label="Message"
-      )
+    )
 
+    class Meta:
+        model = Contact
+        fields = ['full_name', 'email', 'subject', 'message']
 
 
 class JobApplicationForm(forms.ModelForm):
+   
+
+    phone_number = forms.CharField(
+        max_length=10,
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Your Phone Number',
+            'pattern': r'\d{10}',
+            'title': 'Enter a 10-digit phone number'
+        }),
+        validators=[RegexValidator(r'^\d{10}$', 'Enter a valid 10-digit phone number.')]
+    )
     class Meta:
         model = JobApplication
-        fields = ['full_name', 'email', 'phone_number', 'resume', 'job_position']
+        fields = ['full_name', 'email', 'phone_number', 'cv_file', 'job_position']
+    widgets = {
+        'full_name': forms.TextInput(attrs={'placeholder': 'Your Full Name'}),
+        'email': forms.EmailInput(attrs={'placeholder': 'Your Email Address'}),
+        'phone_number': forms.TextInput(attrs={'placeholder': 'Your Phone Number','pattern': r'\d{10}'}),
+        'job_position': forms.Select(attrs={'class': 'form-control'}),
+        'cv_file': forms.ClearableFileInput(attrs={'accept': '.pdf,.doc,.docx'})
+    }
+
+    
+def clean_cv_file(self):
+    cv_file = self.cleaned_data.get('cv_file')
+    if not cv_file.name.endswith('.pdf'):
+        raise forms.ValidationError("Only PDF files are allowed.")
+    return cv_file
+
+

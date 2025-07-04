@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+   
+    <title>Employee Informations</title>
+     <style>
+
+
+footer {
+    background-color: #202020;
+    color: white;
+    padding: 1rem 2rem;
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.footer-copy p {
+    font-size: 0.85rem;
+    color: #ccc;
+}
+
+ @media (max-width: 575.98px) {
+  .table-responsive {
+    font-size: 0.8rem;
+  }
+}
+    </style>
+
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold" href="{% url 'admin_dashboard' %}">Admin Dashboard</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'admin_dashboard' %}">Dashboard</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'user_detail_list' %}">Users</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'candidate_detail_list' %}">Candidates</a>
+        </li>
+
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'candidate_education_list' %}">Qualification</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'candidate_resume_list' %}">Resume</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'employee_detail_list' %}">Employees</a>
+        </li>
+
+        
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'jobposting_detail_list' %}">Job Postings</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'job_application_list' %}">Job Application</a>
+        </li>
+
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'contact_detail_list' %}">Contact</a>
+        </li>
+     
+
+
+   
+
+      <span class="navbar-text text-white me-3 d-none d-md-inline">
+        Welcome, Admin
+      </span>
+      <a class="btn btn-outline-light btn-sm" href="{% url 'admin_logout' %}">Logout</a>
+    </div>
+  </div>
+</nav>
+
+    <br>
+
+      <h2 style="text-align: center;"> Employee Profile List</h2>
+
+<br>
+ <div class="container-fluid mb-3 bg-light p-5 rounded ">
+   <form method="get" class="row g-2 align-items-center px-3">
+    <div class="col-md-4">
+      <input type="text" name="search" class="form-control" placeholder="Search by name or email..." value="{{ request.GET.search }}">
+    </div>
+ 
+
+  <div class="col-sm-2">
+    <select name="designation" class="form-select">
+      <option value="">Designation </option>
+      {% for designation in  designation_list %}
+      <option value="{{ designation }}" {% if request.GET.designation == designation %}selected{% endif %}>{{ designation }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+    <div class="col-sm-2">
+    <select name="sector" class="form-select">
+      <option value="">All Sectors</option>
+      {% for sector in sector_list %}
+      <option value="{{ sector }}" {% if request.GET.sector == sector %}selected{% endif %}>{{ sector }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="col-sm-2">
+    <select name="location" class="form-select">
+      <option value="">All Locations</option>
+      {% for location in location_list %}
+      <option value="{{ location }}" {% if request.GET.location == location %}selected{% endif %}>{{ location }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+    <div class="col-md-2">
+      <button type="submit" class="btn btn-primary">Filter</button>
+    </div>
+  </form>
+</div>
+
+    <br>
+    <div class="table-responsive">
+   <table class="table table-bordered table-striped">
+        <thead>
+            <th>Name</th><th>Email</th><th>Phone No</th><th>Company Name</th><th>Designation</th><th>Location</th><th>Sector</th><th>Company website</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+            {% for detail in  employee_detail %}
+            <tr>
+                <td>{{ detail.name }}</td><td>{{ detail.email }}</td><td>{{ detail.phoneNo }}</td><td>{{ detail.company_name }}</td><td>{{ detail.designation }}</td><td>{{ detail.location }}</td><td>{{ detail.sector }}</td><td>{{ detail.company_website }}</td>
+                
+                
+                  <td>
+                    <!-- <a href="#" class="btn btn-warning btn-sm">Update</a> -->
+                     <a href="{% url 'delete_employee' detail.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+     <footer>
+        <div class="footer-content">
+            
+            <div class="footer-copy">
+                <p>&copy; 2025 PRAVAH. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

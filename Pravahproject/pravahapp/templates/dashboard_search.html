@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search </title>
+</head>
+<body>
+    
+    <!-- Candidate Profiles -->
+{% for candidate in candidates %}
+<tr>
+    <td>{{ candidate.name }}</td>
+    <td>{{ candidate.email }}</td>
+    <td>{{ candidate.contact }}</td>
+    <td>{{ candidate.city }}</td>
+</tr>
+{% empty %}
+<tr><td colspan="4">No matching candidates</td></tr>
+{% endfor %}
+
+<!-- Employee Profiles -->
+{% for employee in employees %}
+<tr>
+    <td>{{ employee.name }}</td>
+    <td>{{ employee.email }}</td>
+    <td>{{ employee.company }}</td>
+</tr>
+{% empty %}
+<tr><td colspan="3">No matching employees</td></tr>
+{% endfor %}
+
+<!-- Job Postings -->
+{% for job in jobs %}
+<tr>
+    <td>{{ job.title }}</td>
+    <td>{{ job.company }}</td>
+    <td>{{ job.location }}</td>
+</tr>
+{% empty %}
+<tr><td colspan="3">No matching jobs</td></tr>
+{% endfor %}
+
+</body>
+</html>

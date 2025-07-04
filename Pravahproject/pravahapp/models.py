@@ -2,11 +2,22 @@
 from django.conf import settings
 from django.utils import timezone
 
-from django.db import models
+from django.db import models 
+
+
+
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import RegexValidator
 
 
 class CustomUser(AbstractUser):
+    username = models.CharField(
+        max_length=150,
+        unique=True,
+        validators=[
+            RegexValidator(r'^[A-Za-z\s]+$', 'Username must contain only letters and spaces.')
+        ]
+    )
       # Defining user roles as choices
     ROLE_CHOICES = [
         ('Candidate', 'Candidate'),
@@ -16,11 +27,6 @@ class CustomUser(AbstractUser):
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='Candidate')
     registered_at = models.DateField(default=timezone.now) 
 
-    username = models.CharField(
-        max_length=150,
-        unique=True,
-        validators=[]  # Remove default regex validator
-    )
   
 
    
@@ -141,7 +147,16 @@ class CandidateProfile(models.Model):
     contact = models.CharField(max_length=15)
     dob = models.DateField()
     age = models.IntegerField()
-    gender = models.CharField(max_length=10, choices=[('M', 'Male'), ('F', 'Female')])
+    GENDER_CHOICES = [
+    ('M', 'Male'),
+    ('F', 'Female'),
+    ]
+
+    gender = models.CharField(
+    max_length=10,
+    choices=GENDER_CHOICES,
+    default='F'
+    )
     village = models.CharField(max_length=100, blank=True, null=True)
     taluka = models.CharField(max_length=100, blank=True, null=True)
     district = models.CharField(max_length=100, blank=True, null=True)
@@ -163,7 +178,7 @@ class EmployeeProfile(models.Model):
     designation = models.CharField(max_length=100)
     location = models.CharField(max_length=100)
     sector = models.CharField(max_length=100)
-    companywebsite = models.CharField(max_length=100)
+    company_website = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
@@ -172,14 +187,14 @@ class Education(models.Model):
     candidate = models.ForeignKey(CandidateProfile, on_delete=models.CASCADE, related_name='education')
 
     degree = models.CharField(max_length=100)
-    coursename= models.CharField(max_length=100, null=True, blank=True)
+    course_name= models.CharField(max_length=100, null=True, blank=True)
     college = models.CharField(max_length=100)
     institution = models.CharField(max_length=100)
     year_of_passing = models.IntegerField()
     percentage = models.FloatField()
     skills = models.CharField(max_length=200)
     experience = models.CharField(max_length=100)
-    interestedsector = models.CharField(max_length=100)
+    interested_sector = models.CharField(max_length=100)
     
 
 class SubmitCV(models.Model):
@@ -196,6 +211,7 @@ def __str__(self):
      return self.name
 
 class JobPostings(models.Model):
+  
     job_title = models.CharField(max_length=255)
     company_name = models.CharField(max_length=255)
     job_location = models.CharField(max_length=255)
@@ -210,11 +226,13 @@ class JobPostings(models.Model):
     application_deadline = models.DateField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+    posted_by = models.ForeignKey(EmployeeProfile, on_delete=models.CASCADE, null=True, blank=True)
 
-
-
+   
+    
     def __str__(self):
-        return self.job_title
+       return self.job_title
 
 
 
@@ -229,15 +247,25 @@ class Contact(models.Model):
         return self.full_name
 
 class JobApplication(models.Model):
+    job = models.ForeignKey(JobPostings, on_delete=models.CASCADE, related_name='applications', null=True, blank=True)
+    candidate = models.ForeignKey(CandidateProfile, on_delete=models.CASCADE, related_name='applications', null=True, blank=True)
     full_name = models.CharField(max_length=255)
     email = models.EmailField()
     phone_number = models.CharField(max_length=15)
-    resume = models.FileField(upload_to='resumes/')
+    cv_file = models.FileField(upload_to='cv_files/', null=True, blank=True)
     job_position = models.CharField(max_length=255)
-    applied_at = models.DateTimeField(auto_now_add=True)
+    applied_at = models.DateField(auto_now_add=True)
+    status = models.CharField(max_length=20, choices=[
+    ('applied', 'Applied'),
+    ('shortlisted', 'Shortlisted'),
+    ('interview', 'Interview Scheduled'),
+    ('rejected', 'Rejected'),
+], default='applied')
+
+
 
     def __str__(self):
-        return f'{self.full_name} - {self.job_position}'
+        return f"{self.full_name} - {self.job.job_title}"
 
 
 

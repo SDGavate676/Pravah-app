@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <title>Candidate Informations</title>
+     <style>
+
+
+footer {
+    background-color: #202020;
+    color: white;
+    padding: 1rem 2rem;
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.footer-copy p {
+    font-size: 0.85rem;
+    color: #ccc;
+}
+
+ @media (max-width: 575.98px) {
+  .table-responsive {
+    font-size: 0.8rem;
+  }
+}
+
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold" href="{% url 'admin_dashboard' %}">Admin Dashboard</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'admin_dashboard' %}">Dashboard</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'user_detail_list' %}">Users</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'candidate_detail_list' %}">Candidates</a>
+        </li>
+
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'candidate_education_list' %}">Qualification</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'candidate_resume_list' %}">Resume</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'employee_detail_list' %}">Employees</a>
+        </li>
+
+        
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'jobposting_detail_list' %}">Job Postings</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'job_application_list' %}">Job Application</a>
+        </li>
+
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'contact_detail_list' %}">Contact</a>
+        </li>
+     
+
+
+   
+
+      <span class="navbar-text text-white me-3 d-none d-md-inline">
+        Welcome, Admin
+      </span>
+      <a class="btn btn-outline-light btn-sm" href="{% url 'admin_logout' %}">Logout</a>
+    </div>
+  </div>
+</nav>
+<br>
+
+    <h2 style="text-align: center;"> Candidate Education  Info</h2>
+    <br>
+
+<div class="container-fluid mb-3 bg-light p-5 rounded">
+    <form method="get" class="row g-2 align-items-center px-3">
+        <div class="col-md-4">
+            <input type="text" name="search" class="form-control" placeholder="Search by name..." value="{{ request.GET.search }}">
+        </div>
+
+        <div class="col-md-3">
+            <select name="degree" class="form-select">
+                <option value="">All Education Levels</option>
+                <option value="10th" {% if request.GET.degree == "10th" %}selected{% endif %}>SSC</option>
+                <option value="12th" {% if request.GET.degree == "12th" %}selected{% endif %}>HSC</option>
+                <option value="Undergraduate" {% if request.GET.degree == "Undergraduate" %}selected{% endif %}>Undergraduate</option>
+                <option value="Postgraduate" {% if request.GET.degree == "Postgraduate" %}selected{% endif %}>Postgraduate</option>
+            </select>
+        </div>
+
+        <div class="col-sm-2">
+            <select name="course_name" class="form-select">
+                <option value="">All Course Names</option>
+                {% for cname in course_name_list %}
+                    <option value="{{ cname }}" {% if request.GET.course_name == cname %}selected{% endif %}>{{ cname }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-sm-2">
+            <select name="college" class="form-select">
+                <option value="">All Colleges and Universities</option>
+                {% for clg in college_list %}
+                    <option value="{{ clg }}" {% if request.GET.college == clg %}selected{% endif %}>{{ clg }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-sm-2">
+            <select name="year_of_passing" class="form-select">
+                <option value="">Year of Passing</option>
+                {% for year in year_of_passing_list %}
+                    <option value="{{ year }}" {% if request.GET.year_of_passing == year %}selected{% endif %}>{{ year }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-sm-2">
+            <select name="experience" class="form-select">
+                <option value="">Experience</option>
+                {% for exp in experience_list %}
+                    <option value="{{ exp }}" {% if request.GET.experience == exp %}selected{% endif %}>{{ exp }}</option>
+                {% endfor %}
+            </select> 
+        </div>
+
+        <div class="col-sm-2">
+            <select name="interested_sector" class="form-select">
+                <option value="">All Interested Sectors</option>
+                {% for sector in interested_sector_list %}
+                    <option value="{{ sector }}" {% if request.GET.interested_sector == sector %}selected{% endif %}>{{ sector }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </div>
+    </form>
+</div>
+
+    <br>
+  <div  class="table-responsive">
+
+
+   <table class="table table-bordered table-striped">
+        <thead>
+            <tr><th>Candidate</th><th>Degree</th><th>Course_Name</th><th>College</th><th>Institution</th><th>Year Of Passing</th><th>Percentage/CGPA</th><th>Skills-Tech/NonTech</th><th>Experience</th><th>Interested Sector</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+            {% for detail in  candidate_education %}
+            <tr>
+                <td>{{ detail.candidate }}</td><td>{{ detail.degree }}</td><td>{{ detail.course_name }}</td><td>{{ detail.college }}</td><td>{{ detail.institution }}</td><td>{{ detail.year_of_passing }}</td><td>{{ detail.percentage }}</td><td>{{ detail.skills }}</td><td>{{ detail.experience}}</td><td>{{ detail.interested_sector }}</td>
+                  <td>
+                    <!-- <a href="#" class="btn btn-warning btn-sm">Update</a> -->
+                     <a href="{% url 'delete_candidate' detail.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+
+     <footer>
+        <div class="footer-content">
+            
+            <div class="footer-copy">
+                <p>&copy; 2025 PRAVAH. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

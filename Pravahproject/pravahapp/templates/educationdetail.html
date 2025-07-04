@@ -10,7 +10,7 @@
     <link href="{% static 'style.css' %}" rel="stylesheet">
     <style>
 nav {
-    background-color:rgba(251, 151, 19, 0.996) ;
+    background-color: white;
     padding: 1rem 2rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -21,67 +21,11 @@ nav article {
     align-items: center;
     flex-wrap: wrap;
 }
-.logo {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* or center if preferred */
-    gap: 4px;
-}
 
-.logo-top {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.logo .symbol {
-    width: 48px;
-    height: 48px;
-}
-
-.logo .name {
-    font-size: 2.5rem;
-    font-weight: bolder;
-    color: #073479; /* or #0B8FAB based on your background */
-}
-
-.logo  .name .Span {
-    color:#0ec4fc
-}
-
-.logo .name:hover {
-    color:    #8A2BE2; /* or #F4A259 based on your background */
-}
-.logo .tagline {
-    font-size: 0.80rem;
-    color: rgb(20, 44, 92); /* soft white if navbar bg is dark */
-    margin-bottom: 5px;
-    margin-left: 30px;
-    font-weight:bolder;
-    align-items: center;
-    
-
-}
-.logo-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1px; /* spacing between banner and logo */
-    font-size: 1.2rem;
-}
 
 .logo-banner {
-    width: 120px; /* adjust based on design */
-    height: auto;
-    margin-bottom: 4px; 
-    border-color:rgba(235, 136, 7, 0.993) ;
-  
-
-}
-
-.logo-banner {
-  height: 180px;
-  width: 280px;
+  height: 200px;
+  width: 200px;
 }
 
 .menu-icon {
@@ -98,8 +42,43 @@ nav article {
 
 .nav-links a {
   text-decoration: none;
-  color: white;
-  font-weight: 500;
+  color:  #15b8e1;
+  font-weight: bold;
+  font-size: larger;
+}
+
+header{
+  
+   
+    background-color: #15b8e1;
+    color: white;
+    padding: 1rem 2rem;
+    margin-top: 2rem;
+    text-align: center;
+    height: 160px;
+    margin-top: 0;
+    margin-bottom: .5rem;
+  
+}
+
+.h1{
+    color: white;
+    font-family: "Barlow", sans-serif;
+    display: block;
+    text-align: center;
+    font-size: 5.5rem;
+    font-weight: bolder;
+   
+}
+.nav-links a:hover {
+    color: rgb(242, 139, 43);
+}
+
+.menu-icon {
+  display: none;
+  font-size: 2rem;
+  color: rgb(242, 139, 43);
+  cursor: pointer;
 }
 
 /* Hide menu checkbox */
@@ -109,6 +88,7 @@ nav article {
 
 /* Mobile Styles */
 @media (max-width: 768px) {
+ 
   .menu-icon {
     display: block;
   }
@@ -125,9 +105,14 @@ nav article {
   }
 
   .nav-links a {
+    color:  #15b8e1;
     padding: 0.5rem 0;
     border-top: 1px solid rgba(255, 255, 255, 0.3);
   }
+
+  .nav-links a:hover {
+    color: rgb(242, 139, 43);
+}
 
   nav article {
     flex-direction: column;
@@ -138,7 +123,213 @@ nav article {
     width: 100%;
     text-align: center;
   }
+header{
+    padding: 1rem 1rem;
+    height: auto;
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 1rem;
+
+  }
+h1 {
+    width: 100%;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+    white-space: normal;
+    overflow-wrap: break-word;
+    text-align: center;
 }
+
+}
+
+
+
+body {
+    background-color: #f8fcff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    
+}
+
+.container {
+    max-width: 560px;
+    background-color: #ffffff;
+    border:  2px solid #3d769c;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.05);
+}
+
+h4 {
+    font-weight: 600;
+    color: #e65100;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #e65100;
+    padding-bottom: 10px;
+}
+
+label {
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #343a40;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+select,
+textarea {
+    width: 100%;
+    padding: 8px 12px;
+    margin-bottom: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+.form-check {
+    margin-bottom: 5px;
+}
+
+h6 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #0d6efd;
+    font-size: medium;
+}
+
+.btn-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    padding: 10px 25px;
+    font-size: 16px;
+    border-radius: 6px;
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+}
+
+.mt-4 {
+    margin-top: 1.5rem;
+}
+
+.row.mb-3 > .col-md-4,
+.row.mb-3 > .col-md-6,
+.row.mb-3 > .col-md-12 {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+@media (max-width: 600px) {
+body {
+    font-size: 26px; /* Adjust base font size for better readability */
+    }
+
+.menu-icon {
+    display: block;
+  }
+  
+  .nav-links {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    margin-top: 1rem;
+  }
+
+  #menu-toggle:checked ~ .nav-links {
+    display: flex;
+  }
+
+  .nav-links a {
+    color:  #15b8e1;
+    padding: 0.5rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .nav-links a:hover {
+    color: rgb(242, 139, 43);
+}
+
+  nav article {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  
+    .container {
+        padding: 20px;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+        header{
+            padding: 1rem 1rem;
+            height: auto;
+            width: 100%;
+            margin-top: 0;
+            margin-bottom: 1rem;
+
+        }
+h1 {
+    width: 100%;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+    white-space: normal;
+    overflow-wrap: break-word;
+    text-align: center;
+}
+
+        .form-row {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .form-row label {
+            width: auto;
+            margin-bottom: 5px;
+        }
+     
+        
+         .radio-group {
+        display: flex;
+        gap: 5px;
+        }
+
+        .radio-group label {
+        display: flex;
+        align-items: center;
+        font-weight:500;
+      
+      }
+    }
+
+
+/* Optional: Style checkbox columns in sectors */
+
+/* .col-md-4 {
+    padding-bottom: 8px;
+} */
+.is-invalid {
+    border: 1px solid red !important;
+    background-color: #fff0f0;
+  }
+  /* .text-danger {
+    font-size: 0.9em;
+    color: red;
+  } */
+
+
+
+
+
 
 
     </style>
@@ -147,55 +338,9 @@ nav article {
 <body>
     <nav>
         <article>
-             <!-- <div class="logo"> -->
-                <!-- SVG: Book opening into wave -->
-                <!-- <svg class="symbol" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M10 10C20 20 20 44 10 54" stroke="#0B8FAB" stroke-width="4" stroke-linecap="round"/>
-                  <path d="M54 10C44 20 44 44 54 54" stroke="#F4A259" stroke-width="4" stroke-linecap="round"/>
-                  <path d="M10 54C20 44 44 44 54 54" stroke="#0B3954" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-            
-                <div class="name">PRAVAH</div>
-                <div class="tagline">Bridging Talents to Opportunity</div>
-              </div>  -->
-
-              <!-- <div class="logo">
-                <div class="logo-top">
-                  <svg class="symbol" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 10C20 20 20 44 10 54" stroke="#0B8FAB" stroke-width="4" stroke-linecap="round"/>
-                    <path d="M54 10C44 20 44 44 54 54" stroke="#F4A259" stroke-width="4" stroke-linecap="round"/>
-                    <path d="M10 54C20 44 44 44 54 54" stroke="#0B3954" stroke-width="2" stroke-linecap="round"/>
-                  </svg>
-                  <div class="name">PRAVAH</div>
-                </div>
-                <div class="tagline">Bridging Talents to Opportunity</div>
-              </div> -->
-              <!-- <div class="logo-wrapper"> -->
-                <!-- Image above the logo -->
-                <!-- <img src="{% static 'img/faintorange.png' %}" alt="Logo Banner" class="logo-banner">
-            <div class="logo">
-                <div class="logo-top"> -->
-                  <!-- <svg class="symbol" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 10C20 20 20 44 10 54" stroke="#0B8FAB" stroke-width="4" stroke-linecap="round"/>
-                    <path d="M54 10C44 20 44 44 54 54" stroke="#F4A259" stroke-width="4" stroke-linecap="round"/>
-                    <path d="M10 54C20 44 44 44 54 54" stroke="#0B3954" stroke-width="2" stroke-linecap="round"/>
-                  </svg> -->
-                    <!-- <img class="symbol" src="{% static 'img/logo.jpeg' %}" alt="Logo" style="width: 48px; height: 48px;"> -->
-                  <!-- <div class="name">pravah.<span  class="Span">org</span></div>
-                </div>
-                <div class="tagline">Connecting Talent to Opportunity</div>
-              </div>
-              </div> -->
-            
-              <!-- <div>
-                <img src="{% static 'img/finalorange1.png' %}" alt="Logo Banner" style="height: 180px; width: 280px; "> 
-               </div>
-
-            <a href="/login">Login</a>
-            <a href="/register">Register</a>
-            <a href="/create_profile">Candidate Profile</a> -->
+           
             <div lass="logo-container">
-              <img src="{% static 'img/finalorange1.png' %}" alt="Logo Banner" class="logo-banner"> 
+              <img src="{% static 'img/finalwhite1.png' %}" alt="Logo Banner" class="logo-banner"  height="200px" width="200px"> 
              </div>
 
              <input type="checkbox" id="menu-toggle" />
@@ -212,6 +357,7 @@ nav article {
      
       </article>
       </nav>
+  <header > <h1 style="color: white; font-weight: 600; font-size: 5.5rem; justify-content: center; margin-bottom: 20px;">Qualification</h1></header>
     <div class="container">
     <h1>Qualification</h1>
     <form method="POST">
@@ -221,12 +367,182 @@ nav article {
             <option value="12th">12th</option>
             <option value="Degree">Degree</option>
           </select> -->
-        {{ form.as_p }}
-        <button type="submit">Submit</button>
-    </form>
+      {{ form.as_p }} 
+
+
+
+        <!-- <div class="row mb-3">
+          <div class="col-md-6">
+            {{ form.degree.label_tag }}<br>
+            {{ form.degree }}
+          </div>
+          <div class="col-md-6">
+            {{ form.college.label_tag }}
+            {{ form.college }}
+          </div>
+        </div>
+        
+        <div class="row mb-3">
+          <div class="col-md-6">
+            {{ form.coursename.label_tag }}
+            {{ form.coursename }}
+          </div>
+          <div class="col-md-6">
+            {{ form.specialization.label_tag }}
+            {{ form.specialization }}
+          </div>
+        </div>
+        
+        <div class="row mb-3">
+          <div class="col-md-6">
+            {{ form.institution.label_tag }}
+            {{ form.institution }}
+          </div>
+          <div class="col-md-6">
+            {{ form.year_of_passing.label_tag }}
+            {{ form.year_of_passing }}
+          </div>
+        </div>
+    
+        <div class="row mb-3">
+          <div class="col-md-6">
+            {{ form.percentage_type.label_tag }}
+            {{ form.percentage_type }}
+          </div>
+          <div class="col-md-6">
+            {{ form.percentage.label_tag }}
+            {{ form.percentage }}
+          </div>
+        </div>
+    
+        <div class="row mb-3">
+          <div class="col-md-6">
+            {{ form.experience.label_tag }}
+            {{ form.experience }}
+          </div>
+          <div class="col-md-6">
+            {{ form.skill_type.label_tag }}<br>
+            {{ form.skill_type }}
+          </div>
+        </div>
+    
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <h6>{{ form.technical_skills.label }}</h6>
+            {{ form.technical_skills }}
+          </div>
+          <div class="col-md-6">
+            <h6>{{ form.non_technical_skills.label }}</h6>
+            {{ form.non_technical_skills }}
+          </div>
+        </div>
+    
+        <div class="row mb-3">
+          <div class="col-md-12">
+            <h6>{{ form.interestedsector.label }}</h6>
+            <div class="row">
+              {% for checkbox in form.interestedsector %}
+                <div class="col-md-4">
+                  {{ checkbox }}
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div> -->
+    
+     <button type="submit">Submit</button>
+    </form> 
+    
+   <script>
+document.querySelector('form').addEventListener('submit', function (e) {
+    let isValid = true;
+
+    // Clear old red borders
+    document.querySelectorAll('input, select, textarea').forEach(el => el.classList.remove('is-invalid'));
+
+    const isLetters = (value) => /^[A-Za-z\s.,\-&()']+$/.test(value.trim());
+    const isDigits = (value) => /^\d+$/.test(value.trim());
+    const isYear = (value) => /^\d{4}$/.test(value.trim());
+    const isPercentage = (value) => /^(\d{1,2}(\.\d{1,2})?|100)$/.test(value.trim());
+
+    const fields = [
+        { id: 'id_college', label: 'College', check: isLetters },
+        { id: 'id_course_name', check: isLetters },
+        { id: 'id_specialization', label: 'Specialization', check: (val) => val.trim() === '' || isLetters(val) },
+        { id: 'id_institution', check: (val) => val.trim() === '' || isLetters(val) },
+        { id: 'id_experience', label: 'Experience', check: (val) => val.trim().length > 0 }
+
+    ];
+
+    fields.forEach(({ id, check }) => {
+        const field = document.getElementById(id);
+        if (field && !check(field.value)) {
+            field.classList.add('is-invalid');
+            isValid = false;
+        }
+    });
+
+    const yop = document.getElementById('id_year_of_passing');
+    if (yop && !isYear(yop.value)) {
+        yop.classList.add('is-invalid');
+        isValid = false;
+    }
+
+    const percent = document.getElementById('id_percentage');
+    if (percent && !isPercentage(percent.value)) {
+        percent.classList.add('is-invalid');
+        isValid = false;
+    }
+
+    const perType = document.getElementById('id_percentage_type');
+    if (perType && !perType.value) {
+        perType.classList.add('is-invalid');
+        isValid = false;
+    }
+
+    const skillType = document.querySelector('input[name="skill_type"]:checked')?.value;
+
+    if (!skillType) {
+        const skillTypeInputs = document.querySelectorAll('input[name="skill_type"]');
+        if (skillTypeInputs.length) skillTypeInputs[0].classList.add('is-invalid');
+        isValid = false;
+    }
+
+    if (skillType === 'technical') {
+        const selected = document.querySelectorAll('input[name="technical_skills"]:checked');
+        if (selected.length === 0) {
+            const ref = document.querySelector('input[name="technical_skills"]');
+            if (ref) ref.classList.add('is-invalid');
+            isValid = false;
+        }
+    }
+
+    if (skillType === 'non_technical') {
+        const selected = document.querySelectorAll('input[name="non_technical_skills"]:checked');
+        if (selected.length === 0) {
+            const ref = document.querySelector('input[name="non_technical_skills"]');
+            if (ref) ref.classList.add('is-invalid');
+            isValid = false;
+        }
+    }
+
+    const sectorChecked = document.querySelectorAll('input[name="interestedsector"]:checked');
+    if (sectorChecked.length === 0) {
+        const ref = document.querySelector('input[name="interestedsector"]');
+        if (ref) ref.classList.add('is-invalid');
+        isValid = false;
+    }
+
+    if (!isValid) e.preventDefault();
+});
+</script>
+
+
+
+
     <a href="{% url 'create_profile' %}">Back to Dashboard</a>
     </div>
-
+<br><br><br><br>
     <footer>
         <div class="footer-content">
             <div class="footer-links">

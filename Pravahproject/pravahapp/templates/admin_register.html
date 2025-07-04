@@ -1,0 +1,456 @@
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <title>Admin Register</title>
+
+    <style>
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 700px;
+}
+
+
+
+footer {
+  background-color: #202020;
+  color: white;
+  padding: 1rem 2rem;
+  text-align: center;
+  margin-top: auto; /* Push footer to bottom */
+}
+
+
+
+footer {
+    
+    background-color: #202020;
+    color: white;
+    padding: 1rem 2rem;
+    margin-top: 2rem;
+    text-align: center;
+    height: ;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.footer-copy p {
+    font-size: 0.85rem;
+    color: #ccc;
+}
+footer {
+  margin-top: 0 !important;
+}
+
+.is-invalid {
+  border: 1px solid red !important;
+  background-color: #fff0f0;
+}
+</style>
+
+</head>
+<!-- <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold" href="{% url 'admin_dashboard' %}">Admin Dashboard</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'admin_dashboard' %}">Dashboard</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'user_detail_list' %}">Users</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'candidate_detail_list' %}">Candidates</a>
+        </li>
+
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'candidate_education_list' %}">Qualification</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'candidate_resume_list' %}">Resume</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'employee_detail_list' %}">Employees</a>
+        </li>
+
+        
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'jobposting_detail_list' %}">Job Postings</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'job_application_list' %}">Job Application</a>
+        </li>
+
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'contact_detail_list' %}">Contact</a>
+        </li>
+     
+
+
+   
+
+      <span class="navbar-text text-white me-3 d-none d-md-inline">
+        Welcome, Admin
+      </span>
+      <a class="btn btn-outline-light btn-sm" href="{% url 'admin_logout' %}">Logout</a>
+    </div>
+  </div>
+</nav>
+
+
+
+<!-- <div class="bg-light">
+<div class="wrapper">
+<div class="container mt-5" >
+    <div class="row justify-content-center" >
+        <div class="col-md-4" >
+            <div class="card shadow p-4">
+                <h4 class="mb-3 text-center">Admin Register</h4>
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-danger">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label>Username</label>
+                        <input type="text" name="username" class="form-control" required>
+                    </div>
+                      <div class="mb-3">
+                        <label>Email address</label>
+                        <input type="text" name="email" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label>Password</label>
+                        <input type="password" name="password" class="form-control" required>
+                    </div>
+                     <div class="mb-3">
+                        <label> Confirm Password</label>
+                        <input type="password" name="confirm_password" class="form-control" required>
+                    </div>
+                  
+                    <button type="submit" class="btn btn-primary w-100">Register</button>
+                </form>
+                <a href="{% url 'admin_login' %}">Already Registered?<h4 style="color: aqua;">Login</h4></a>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div> -->
+
+  <!-- <main class="flex-grow-1 d-flex justify-content-center align-items-center">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-6 col-lg-4">
+            <div class="card shadow p-4">
+              <h4 class="mb-3 text-center">Admin Register</h4>
+              <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                  <label>Username</label>
+                  <input type="text" name="username" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                  <label>Email address</label>
+                  <input type="text" name="email" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                  <label>Password</label>
+                  <input type="password" name="password" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                  <label>Confirm Password</label>
+                  <input type="password" name="confirm_password" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Register</button>
+              </form>
+              <div class="text-center mt-2">
+                <span>Already Registered? <a href="{% url 'admin_login' %}" class="text-info fw-bold">Login</a></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+</body>
+    <!-- <br>
+   <form method="POST">
+    {% csrf_token %}
+
+    {% if form.errors %}
+        <ul style="color:red;">
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <li>{{ field.label }}: {{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <div class="form-row">
+        {{ form.username.label_tag }}
+        {{ form.username }}
+    </div>
+
+    <div class="form-row">
+        {{ form.email.label_tag }}
+        {{ form.email }}
+    </div>
+
+    <div class="form-row">
+        {{ form.password.label_tag }}
+        {{ form.password }}
+    </div>
+
+    <div class="form-row">
+        {{ form.confirm_password.label_tag }}
+        {{ form.confirm_password  }}
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Register</button>
+</form>
+ <a href="{% url 'admin_login' %}">Already Registered?<h4 style="color: aqua;">Login</h4></a>
+
+     {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    
+       
+    </div> -->
+
+     <!-- <footer>
+        <div class="footer-content">
+            
+            <div class="footer-copy">
+                <p>&copy; 2025 PRAVAH. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body> --> 
+ <body class="d-flex flex-column min-vh-100">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow" style="height: 70px;">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold" href="{% url 'admin_dashboard' %}">Admin Dashboard</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'admin_dashboard' %}">Dashboard</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'user_detail_list' %}">Users</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'candidate_detail_list' %}">Candidates</a>
+        </li>
+
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'candidate_education_list' %}">Qualification</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'candidate_resume_list' %}">Resume</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'employee_detail_list' %}">Employees</a>
+        </li>
+
+        
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'jobposting_detail_list' %}">Job Postings</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'job_application_list' %}">Job Application</a>
+        </li>
+
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'contact_detail_list' %}">Contact</a>
+        </li>
+     
+
+
+   
+
+      <span class="navbar-text text-white me-3 d-none d-md-inline">
+        Welcome, Admin
+      </span>
+      <a class="btn btn-outline-light btn-sm" href="{% url 'admin_logout' %}">Logout</a>
+    </div>
+  </div>
+
+
+
+
+    </div>
+  </nav>
+ 
+
+  <!-- Main Form Content -->
+  <main class="flex-grow-1 d-flex justify-content-center align-items-center bg-light"  style="padding-bottom: 0; margin-bottom: 0;">
+    <div class="card shadow p-4 w-100" style="max-width: 600px; max-height: 800px;" >
+      <h4 class="text-center mb-3">Admin Register</h4>
+
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-danger">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label>Username</label>
+          <input type="text" name="username" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label>Email address</label>
+          <input type="text" name="email" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label>Password</label>
+          <input type="password" name="password" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label>Confirm Password</label>
+          <input type="password" name="confirm_password" class="form-control" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Register</button>
+      </form>
+      <script>
+document.addEventListener('DOMContentLoaded', function () {
+  const form = document.querySelector('form');
+
+  form.addEventListener('submit', function (event) {
+    let isValid = true;
+
+    const username = form.username;
+    const email = form.email;
+    const password = form.password;
+    const confirmPassword = form.confirm_password;
+
+    // Reset previous error classes
+    [username, email, password, confirmPassword].forEach(input => {
+      input.classList.remove('is-invalid');
+    });
+
+    // ✅ Username: only letters and spaces, at least 3 characters
+    const usernamePattern = /^[A-Za-z ]+$/;
+    if (!usernamePattern.test(username.value.trim()) || username.value.trim().length < 3) {
+      username.classList.add('is-invalid');
+      isValid = false;
+    }
+
+    // Email: basic format check
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email.value.trim())) {
+      email.classList.add('is-invalid');
+      isValid = false;
+    }
+
+    // Password: at least 8 characters
+    if (password.value.trim().length < 8) {
+      password.classList.add('is-invalid');
+      isValid = false;
+    }
+
+    // Confirm password match
+    if (password.value !== confirmPassword.value) {
+      confirmPassword.classList.add('is-invalid');
+      isValid = false;
+    }
+
+    if (!isValid) {
+      event.preventDefault(); // Stop form submission
+    }
+  });
+});
+</script>
+
+
+      <div class="text-center mt-3">
+        <small style="font-size: large;">Already Registered? <a href="{% url 'admin_login' %}" class="text-info fw-bold">Login</a></small>
+      </div>
+    </div>
+      <!-- Footer -->
+
+  </main>
+  <footer class="bg-dark text-white text-center py-4">
+    <p class="mb-0">&copy; 2025 PRAVAH. All rights reserved.</p>
+  </footer>
+  
+
+</body>
+
+</html>
+
+{% endblock %}

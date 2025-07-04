@@ -8,9 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link href="{% static 'style.css' %}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <style>
 nav {
-    background-color:rgba(251, 151, 19, 0.996) ;
+    background-color :white;
     padding: 1rem 2rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -20,126 +22,87 @@ nav article {
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-}
-.logo {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* or center if preferred */
-    gap: 4px;
-}
-
-.logo-top {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.logo .symbol {
-    width: 48px;
-    height: 48px;
-}
-
-.logo .name {
-    font-size: 2.5rem;
-    font-weight: bolder;
-    color: #073479; /* or #0B8FAB based on your background */
-}
-
-.logo  .name .Span {
-    color:#0ec4fc
-}
-
-.logo .name:hover {
-    color:    #8A2BE2; /* or #F4A259 based on your background */
-}
-.logo .tagline {
-    font-size: 0.80rem;
-    color: rgb(20, 44, 92); /* soft white if navbar bg is dark */
-    margin-bottom: 5px;
-    margin-left: 30px;
-    font-weight:bolder;
-    align-items: center;
-    
-
-}
-.logo-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1px; /* spacing between banner and logo */
-    font-size: 1.2rem;
-}
-
-.logo-banner {
-    width: 120px; /* adjust based on design */
-    height: auto;
-    margin-bottom: 4px; 
-    border-color:rgba(235, 136, 7, 0.993) ;
-  
-
+    height: 200px;
 }
 
 
-.logo-banner {
-  height: 180px;
-  width: 280px;
-}
 
-.menu-icon {
-  display: none;
-  font-size: 2rem;
-  color: white;
-  cursor: pointer;
-}
 
-.nav-links {
-  display: flex;
-  gap: 1.5rem;
-}
+  .logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* or center if preferred */
+            gap: 4px;
+        }
+        
+        .logo-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo .symbol {
+            width: 200px;
+            height: 200px;
+        }
+        
+        .logo .name {
+            font-size: 2.5rem;
+            font-weight: bolder;
+            color: #073479; /* or #0B8FAB based on your background */
+        }
+        
+        .logo  .name .Span {
+            color:#0ec4fc
+        }
+        
+        .logo .name:hover {
+            color:    #8A2BE2; /* or #F4A259 based on your background */
+        }
+        .logo .tagline {
+            font-size: 0.80rem;
+            color: rgb(20, 44, 92); /* soft white if navbar bg is dark */
+            margin-bottom: 5px;
+            margin-left: 30px;
+            font-weight:bolder;
+            align-items: center;
+            
+        
+        }
+        .logo-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1px; /* spacing between banner and logo */
+        }
+        
+        .logo-banner {
+            width: 200px; /* adjust based on design */
+            height: 150px;
+            height: auto;
+            margin-bottom: 4px; /* slight spacing before logo starts */
+        }
+        
+        
 
-.nav-links a {
-  text-decoration: none;
-  color: white;
-  font-weight: 500;
-}
+
+
+
+
+
+
 
 /* Hide menu checkbox */
-#menu-toggle {
-  display: none;
-}
 
-/* Mobile Styles */
-@media (max-width: 768px) {
-  .menu-icon {
-    display: block;
-  }
 
-  .nav-links {
-    display: none;
-    width: 100%;
-    flex-direction: column;
-    margin-top: 1rem;
-  }
 
-  #menu-toggle:checked ~ .nav-links {
-    display: flex;
-  }
 
-  .nav-links a {
-    padding: 0.5rem 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.3);
-  }
-
-  nav article {
-    flex-direction: column;
-    align-items: flex-start;
-  }
 
   .logo-container {
     width: 100%;
     text-align: center;
   }
-}
+
 
 .radio-inline {
         display: inline-block;
@@ -171,9 +134,7 @@ nav article {
         display: flex;
         align-items: center;
         font-weight:500;
-      
-        
-    }
+}
 
    
 
@@ -202,6 +163,57 @@ nav article {
       }
     }
 
+header{
+  
+   
+    background-color: #15b8e1;
+    color: white;
+    padding: 1rem 2rem;
+    margin-top: 2rem;
+    text-align: center;
+    height: 160px;
+    margin-top: 0;
+    margin-bottom: .5rem;
+  
+}
+
+.h1{
+    color: white;
+    font-family: "Barlow", sans-serif;
+    display: block;
+    text-align: center;
+    font-size: 5.5rem;
+    font-weight: bolder;
+   
+}
+.container {
+ 
+    max-width: 700px;
+    margin: 3rem auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-color: black;
+    border: 2px solid #3d769c;  
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #15b8e1;
+  padding: 20px 0;
+  text-align: center;
+  color: white;
+}
+
+.is-invalid {
+  border: 1px solid red !important;
+  background-color: #fff0f0;
+}
+
     </style>
 
 </head>
@@ -209,62 +221,15 @@ nav article {
     <nav>
         <article>
             <div lass="logo-container">
-                <img src="{% static 'img/finalorange1.png' %}" alt="Logo Banner" class="logo-banner"> 
+                <img src="{% static 'img/finalwhite1.png' %}" alt="Logo Banner" class="logo-banner"  height="200px" width="200px"> 
                </div>
 
-               <input type="checkbox" id="menu-toggle" />
-                <label for="menu-toggle" class="menu-icon">&#9776;</label>
-             <div class="nav-links" >
-                <a href="/login">Login</a>
-                <a href="/register">Register</a>
-                <a href="/create_profile">Candidate Profile</a>
-   </div>
-
-            <!-- <div>
-                <img src="{% static 'img/finalorange1.png' %}" alt="Logo Banner" style="height: 180px; width: 280px; "> 
-               </div> -->
-          <!-- <div class="logo-wrapper"> -->
-            <!-- Image above the logo -->
-            <!-- <img src="{% static 'img/faintorange.png' %}" alt="Logo Banner" class="logo-banner">
-        <div class="logo">
-            <div class="logo-top"> -->
-              <!-- <svg class="symbol" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10 10C20 20 20 44 10 54" stroke="#0B8FAB" stroke-width="4" stroke-linecap="round"/>
-                <path d="M54 10C44 20 44 44 54 54" stroke="#F4A259" stroke-width="4" stroke-linecap="round"/>
-                <path d="M10 54C20 44 44 44 54 54" stroke="#0B3954" stroke-width="2" stroke-linecap="round"/>
-              </svg> -->
-                <!-- <img class="symbol" src="{% static 'img/logo.jpeg' %}" alt="Logo" style="width: 48px; height: 48px;"> -->
-              <!-- <div class="name">pravah.<span  class="Span">org</span></div>
-            </div>
-            <div class="tagline">Connecting Talent to Opportunity</div>
-          </div>
-          </div> -->
-
-              <!-- <div class="logo">
-                <div class="logo-top">
-                  <svg class="symbol" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 10C20 20 20 44 10 54" stroke="#0B8FAB" stroke-width="4" stroke-linecap="round"/>
-                    <path d="M54 10C44 20 44 44 54 54" stroke="#F4A259" stroke-width="4" stroke-linecap="round"/>
-                    <path d="M10 54C20 44 44 44 54 54" stroke="#0B3954" stroke-width="2" stroke-linecap="round"/>
-                  </svg>
-                  <div class="name">PRAVAH</div>
-                </div>
-                <div class="tagline">Bridging Talents to Opportunity</div>
-              </div>
-               -->
-            <!-- <a href="/login">Login</a>
-            <a href="/register">Register</a>
-            <a href="/create_profile">Candidate Profile</a> -->
-  
-     
-    
- 
-     
-      </article>
+    </article>
       </nav>
+<header > <h1 style="color: white; font-weight: 600; font-size: 5.5rem; justify-content: center; margin-bottom: 20px;">Register</h1></header>
 
 
-      <div class="container">
+      <div class="container" >
         <h1>Registration</h1>
 <!--     
         {% if role_from_session %}
@@ -293,21 +258,25 @@ nav article {
            <div class="form-row">
             {{ form.username.label_tag }}
             {{ form.username }}
+         
         </div>
         
         <div class="form-row">
             {{ form.email.label_tag }}
             {{ form.email }}
+        
         </div>
         
         <div class="form-row">
             {{ form.password.label_tag }}
             {{ form.password }}
+            
         </div>
         
         <div class="form-row">
             {{ form.confirm_password.label_tag }}
             {{ form.confirm_password }}
+           
         </div>
         
         <div class="form-row">
@@ -319,6 +288,7 @@ nav article {
                     </label>
                 {% endfor %}
             </div>
+               <div class="text-danger" id="error_role"></div>
         </div>
 
              
@@ -340,64 +310,8 @@ nav article {
     </div>
     
     
+   <br><br><br><br>
    
-    <!-- <div class="container">
-        <h1>Registration</h1>
-        {% if role_from_session %}
-        <p>Role from session: {{ role_from_session }}</p>
-        {% endif %}
-
-        <form method="POST">
-        {% csrf_token %}
-        <label for="username">User Name:</label>
-        <input type="text" id="username" name="username" required>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        <label for="role">Role:</label>
-        <select id="role" name="role" required>
-        <option value="">Select Role</option>
-        
-        <option value="Candidate" {% if role_from_session == 'Candidate' %}selected{% endif %}>Candidate</option>
-        <option value="Employee" {% if role_from_session == 'Employee' %}selected{% endif %}>Employee</option>
-       </select>
-
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-        <label for="confirm_password">Confirm Password:</label>
-        <input type="password" id="confirm_password" name="confirm_password" required>
-
-        <!-- <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-         
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-
-
-
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-
-
-        <label for="confirm_password">Confirm Password:</label>
-        <input type="password" id="confirm_password" name="confirm_password" required> -->
-        
-
-        
-   
-        <!-- <button type="submit">Register</button>
-    </form>
-
-    {% if messages %}
-    <ul>
-    {% for message in messages %}
-        <li>{{ message }}</li>
-    {% endfor %}
-    </ul>
-    {% endif %}
-
-       <a href="{% url 'login' %}">Login</a>
-</div> --> 
-
 <footer>
     <div class="footer-content">
         <div class="footer-links">
